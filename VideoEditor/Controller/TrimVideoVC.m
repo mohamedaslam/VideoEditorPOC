@@ -18,6 +18,8 @@
     UIButton *donebtn;
     UILabel *titleNamelabel;
     UIView *titleBarBGView;
+    AVPlayerLayer *layer;
+    AVPlayer* player;
 }
 @end
 
@@ -71,7 +73,7 @@
     ///////////DoneButton
     donebtn = [UIButton new];
     donebtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [donebtn addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [donebtn addTarget:self action:@selector(donebtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [donebtn setBackgroundColor:[UIColor clearColor]];
     donebtn.translatesAutoresizingMaskIntoConstraints = NO;
     [donebtn setImage:[UIImage imageNamed:@"doneimg.png"] forState:UIControlStateNormal];
@@ -96,8 +98,8 @@
     
     //VideoPlayer
     AVPlayerItem* playerItem = [AVPlayerItem playerItemWithURL:getSelectedVideoURL];
-    AVPlayer* player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
-    AVPlayerLayer *layer = [AVPlayerLayer layer];
+    player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
+     layer = [AVPlayerLayer layer];
     [layer setPlayer:player];
     [layer setFrame:CGRectMake(0, 0, self.view.frame.size.width, 240)];
      [layer setBackgroundColor:[UIColor redColor].CGColor];
@@ -106,10 +108,21 @@
     [player play];
     // Do any additional setup after loading the view.
 }
+-(void)viewDidDisappear:(BOOL)animated{
+    [player pause];
+
+    [layer removeFromSuperlayer];
+    layer = nil;
+    
+}
+
 -(void) backbtnClicked:(UIButton*)sender
 {
     ViewController *VC = [self.storyboard instantiateViewControllerWithIdentifier:@"ViewController"];
     [self presentViewController:VC animated:YES completion:nil];
+    
+}
+-(void)donebtnClicked:(UIButton*)sender{
     
 }
 - (void)didReceiveMemoryWarning {

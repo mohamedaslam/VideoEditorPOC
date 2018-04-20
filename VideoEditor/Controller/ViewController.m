@@ -143,6 +143,13 @@
     [videoPlayerBGView.layer addSublayer:layer];
   [self buildAssetsLibrary];
 }
+-(void)viewDidDisappear:(BOOL)animated{
+    [player pause];
+
+    [layer removeFromSuperlayer];
+     layer = nil;
+
+}
 
 #pragma mark - Custom Methods
 
