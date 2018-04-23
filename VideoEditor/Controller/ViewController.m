@@ -29,9 +29,7 @@
     UILabel *titleNamelabel;
     NSURL *getSelectedURl;
     AVPlayer* player;
-    AVPlayerItem* playerItem;
     AVPlayerLayer *layer;
-    
 
 }
 @property (nonatomic, strong) ALAssetsLibrary *assetsLibrary;
@@ -53,7 +51,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     ////////TitleBar BackGroundView
     titleBarBGView=[[UIView alloc]init];
     titleBarBGView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -138,17 +135,8 @@
         make.bottom.equalTo(self.view).with.offset(0);
         make.right.equalTo(self.view).with.offset(0);
 }];
-    layer = [AVPlayerLayer layer];
-    [layer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
-    [videoPlayerBGView.layer addSublayer:layer];
+    
   [self buildAssetsLibrary];
-}
--(void)viewDidDisappear:(BOOL)animated{
-    [player pause];
-
-    [layer removeFromSuperlayer];
-     layer = nil;
-
 }
 
 #pragma mark - Custom Methods
@@ -214,9 +202,12 @@
     }];
     getSelectedURl = [_videosURLArray objectAtIndex:indexPath.row];
     AVPlayerItem* playerItem = [AVPlayerItem playerItemWithURL:[_videosURLArray objectAtIndex:indexPath.row]];
-    [layer setFrame:CGRectMake(10, 10, videoPlayerBGView.frame.size.width-20, videoPlayerBGView.frame.size.height-20)];
     player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
+    layer = [AVPlayerLayer layer];
     [layer setPlayer:player];
+    [layer setFrame:CGRectMake(10, 10, videoPlayerBGView.frame.size.width-20, videoPlayerBGView.frame.size.height-20)];
+    [layer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
+    [videoPlayerBGView.layer addSublayer:layer];
     [player play];
     
     pausebtn = [UIButton new];
@@ -234,7 +225,7 @@
     }];
     
     [_collectionView reloadData];
-
+   
 }
 
 #pragma mark - Show Video List Methods
@@ -251,10 +242,20 @@
     NSString *systemVersion = [[UIDevice currentDevice] systemVersion];
     if ([systemVersion compare:minimumSystemVersion options:NSNumericSearch] != NSOrderedAscending)
         notificationSender = assetsLibrary;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(assetsLibraryDidChange:) name:ALAssetsLibraryChangedNotification object:notificationSender];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(assetsLibraryDidChange:) name:ALAssetsLibraryChangedNotification object:notificationSender];
     [self updateAssetsLibrary];
 }
-
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:ALAssetsLibraryChangedNotification object:nil];
+}
+-(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:YES];
+    [player pause];
+    [layer removeFromSuperlayer];
+    layer = nil;
+    
+}
 - (void)assetsLibraryDidChange:(NSNotification*)changeNotification
 {
     [self updateAssetsLibrary];

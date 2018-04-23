@@ -13,6 +13,7 @@
 		AE1987392085C40900838898 /* ListCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1987382085C40900838898 /* ListCollectionViewCell.m */; };
 		AE19873F2086253300838898 /* doneimg.png in Resources */ = {isa = PBXBuildFile; fileRef = AE19873E2086253200838898 /* doneimg.png */; };
 		AE1987412086253800838898 /* arrowimg.png in Resources */ = {isa = PBXBuildFile; fileRef = AE1987402086253800838898 /* arrowimg.png */; };
+		AE1DE374208DEE31004E8516 /* CropVideoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1DE373208DEE31004E8516 /* CropVideoVC.m */; };
 		AE7266A72084A47700C34411 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AE7266A62084A47700C34411 /* AppDelegate.m */; };
 		AE7266AA2084A47700C34411 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE7266A92084A47700C34411 /* ViewController.m */; };
 		AE7266AD2084A47700C34411 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE7266AB2084A47700C34411 /* Main.storyboard */; };
@@ -27,6 +28,7 @@
 		AECCA1062084C09E00F933A7 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AECCA1052084C09E00F933A7 /* MediaPlayer.framework */; };
 		AECCA10B2084C1E800F933A7 /* AssetBrowserItem.m in Sources */ = {isa = PBXBuildFile; fileRef = AECCA1092084C1E800F933A7 /* AssetBrowserItem.m */; };
 		AECCA1122084D02A00F933A7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AECCA1112084D02A00F933A7 /* QuartzCore.framework */; };
+		AEDD286C2088680100F0EC67 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEDD286B2088680100F0EC67 /* MobileCoreServices.framework */; };
 		B08B0F4D9AD4AAA8D9C60927 /* libPods-VideoEditorTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DE270A2B0687D25BDD1B451 /* libPods-VideoEditorTests.a */; };
 		C3300E68FED08079B5A11520 /* libPods-VideoEditorUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE785908F3BEE946667C9179 /* libPods-VideoEditorUITests.a */; };
 /* End PBXBuildFile section */
@@ -62,6 +64,8 @@
 		AE1987382085C40900838898 /* ListCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListCollectionViewCell.m; sourceTree = "<group>"; };
 		AE19873E2086253200838898 /* doneimg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doneimg.png; sourceTree = "<group>"; };
 		AE1987402086253800838898 /* arrowimg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowimg.png; sourceTree = "<group>"; };
+		AE1DE372208DEE31004E8516 /* CropVideoVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CropVideoVC.h; sourceTree = "<group>"; };
+		AE1DE373208DEE31004E8516 /* CropVideoVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CropVideoVC.m; sourceTree = "<group>"; };
 		AE7266A22084A47600C34411 /* VideoEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VideoEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE7266A52084A47700C34411 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		AE7266A62084A47700C34411 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -86,6 +90,7 @@
 		AECCA1092084C1E800F933A7 /* AssetBrowserItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetBrowserItem.m; sourceTree = "<group>"; };
 		AECCA10A2084C1E800F933A7 /* AssetBrowserItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetBrowserItem.h; sourceTree = "<group>"; };
 		AECCA1112084D02A00F933A7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		AEDD286B2088680100F0EC67 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		E454F1B9FE055B2748E3F683 /* libPods-VideoEditor.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VideoEditor.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA736785B429C90CA632B4B0 /* Pods-VideoEditor.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoEditor.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VideoEditor/Pods-VideoEditor.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -95,6 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AEDD286C2088680100F0EC67 /* MobileCoreServices.framework in Frameworks */,
 				AECCA1122084D02A00F933A7 /* QuartzCore.framework in Frameworks */,
 				AECCA1062084C09E00F933A7 /* MediaPlayer.framework in Frameworks */,
 				AECCA1042084C09400F933A7 /* AssetsLibrary.framework in Frameworks */,
@@ -126,6 +132,7 @@
 		581A5A4FD63461B9802C24FC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AEDD286B2088680100F0EC67 /* MobileCoreServices.framework */,
 				AECCA1112084D02A00F933A7 /* QuartzCore.framework */,
 				AECCA1052084C09E00F933A7 /* MediaPlayer.framework */,
 				AECCA1032084C09400F933A7 /* AssetsLibrary.framework */,
@@ -178,6 +185,8 @@
 				AE7266A92084A47700C34411 /* ViewController.m */,
 				AE11F01F20876AF600C86007 /* TrimVideoVC.h */,
 				AE11F02020876AF600C86007 /* TrimVideoVC.m */,
+				AE1DE372208DEE31004E8516 /* CropVideoVC.h */,
+				AE1DE373208DEE31004E8516 /* CropVideoVC.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -269,6 +278,7 @@
 				AE7266A02084A47600C34411 /* Resources */,
 				764F050C429C29722B9FDAAD /* [CP] Embed Pods Frameworks */,
 				E4934CA3E5304B2FFDDCF64E /* [CP] Copy Pods Resources */,
+				AEBA1279208DC18A00B8D86C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -496,6 +506,20 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		AEBA1279208DC18A00B8D86C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "
+";
+		};
 		CA2019BDA97042E4AEF27F72 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -548,6 +572,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE1DE374208DEE31004E8516 /* CropVideoVC.m in Sources */,
 				AECCA10B2084C1E800F933A7 /* AssetBrowserItem.m in Sources */,
 				AE7266AA2084A47700C34411 /* ViewController.m in Sources */,
 				AE7266B52084A47800C34411 /* main.m in Sources */,
@@ -656,7 +681,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -705,7 +730,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -720,6 +745,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UWRJNNALTK;
 				INFOPLIST_FILE = VideoEditor/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Oottru.VideoEditor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -735,6 +761,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UWRJNNALTK;
 				INFOPLIST_FILE = VideoEditor/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Oottru.VideoEditor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
