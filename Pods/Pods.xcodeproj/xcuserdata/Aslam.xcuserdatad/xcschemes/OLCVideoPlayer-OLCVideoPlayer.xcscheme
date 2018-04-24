@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '990C891F90BFF6051731F1DE722C6DA5'
-               BlueprintName = 'Pods-VideoEditor'
+               BlueprintIdentifier = '87F44347C3B46E755754571A5BE5611F'
+               BlueprintName = 'OLCVideoPlayer-OLCVideoPlayer'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libPods-VideoEditor.a'>
+               BuildableName = 'OLCVideoPlayer.bundle'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

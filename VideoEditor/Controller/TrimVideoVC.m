@@ -15,8 +15,9 @@
 #import <AVFoundation/AVFoundation.h>
 #import "ICGVideoTrimmerView.h"
 #import <MobileCoreServices/MobileCoreServices.h>
+#import "OLCVideoPlayer.h"
 
-@interface TrimVideoVC ()<ICGVideoTrimmerDelegate>
+@interface TrimVideoVC ()<ICGVideoTrimmerDelegate,OLCVideoPlayerDelegate>
 {
     UIView *videoPlayerBGView;
     UIButton *backbtn;
@@ -24,8 +25,18 @@
     UILabel *titleNamelabel;
     UIView *titleBarBGView;
     NSURL *movieUrl;
+    
+    NSArray *playlist;
+
    // ICGVideoTrimmerView *trimmerView;
 }
+@property (strong, nonatomic)OLCVideoPlayer *vidplayer;
+@property (strong, nonatomic) UIProgressView *sldProgress;
+@property(strong,nonatomic) UIButton *btnPlayPause;
+@property (strong, nonatomic) UILabel *CurrentTimeLabel;
+@property (strong, nonatomic) UILabel *totalDurationLabel;
+
+
 @property (assign, nonatomic) BOOL isPlaying;
 @property (strong, nonatomic) AVPlayer *player;
 @property (strong, nonatomic) AVPlayerItem *playerItem;
@@ -47,7 +58,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tempVideoPath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"tmpMov.mov"];
-
     [self.view setBackgroundColor:[UIColor blackColor]];
     ////////TitleBar BackGroundView
     titleBarBGView=[[UIView alloc]init];
@@ -104,16 +114,132 @@
         make.height.equalTo(@(40));
         make.width.equalTo(@(40));
     }];
-    /////////// VIdeoPlayer Background VIeww/////////////
-    videoPlayerBGView=[[UIView alloc]init];
-    [videoPlayerBGView setBackgroundColor:[UIColor darkGrayColor]];
-    [self.view addSubview:videoPlayerBGView];
-    [videoPlayerBGView mas_makeConstraints:^(MASConstraintMaker *make) {
+    
+    self.vidplayer = [[OLCVideoPlayer alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 240)];
+    [self.vidplayer setBackgroundColor:[UIColor darkGrayColor]];
+    self.vidplayer.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:self.vidplayer];
+    [self.vidplayer mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.view);
         make.left.equalTo(self.view).with.offset(0);
+        make.right.equalTo(self.view).with.offset(0);
         make.height.equalTo(@(240));
-        make.width.equalTo(@(self.view.frame.size.width));
     }];
+    [self.vidplayer setDelegate:self];
+    
+    
+    
+    
+    
+    /////////
+    UIView *progressbarBGView=[[UIView alloc]init];
+    progressbarBGView.translatesAutoresizingMaskIntoConstraints = NO;
+    [progressbarBGView setBackgroundColor:[UIColor brownColor]];
+    [self.vidplayer addSubview:progressbarBGView];
+    //    UIEdgeInsets padding = UIEdgeInsetsMake(20, 0, 0, 0);
+    [progressbarBGView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.vidplayer.mas_bottom).with.offset(0);
+        make.left.equalTo(self.vidplayer.mas_left).with.offset(0);
+        make.right.equalTo(self.vidplayer.mas_right).with.offset(0);
+        make.height.equalTo(@(60));
+    }];
+    ////////Play/Pause button
+    self.btnPlayPause = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.btnPlayPause addTarget:self action:@selector(playpausebtn:) forControlEvents:UIControlEventTouchUpInside];
+    [self.btnPlayPause setBackgroundColor:[UIColor redColor]];
+    [self.btnPlayPause setImage:[UIImage imageNamed:@"playicon.png"] forState:UIControlStateNormal];
+    [self.btnPlayPause setExclusiveTouch:YES];
+    [progressbarBGView addSubview:self.btnPlayPause];
+    [self.btnPlayPause mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(progressbarBGView).with.offset(10);
+        make.left.equalTo(progressbarBGView).with.offset(4);
+        make.width.equalTo(@(40));
+        make.height.equalTo(@(40));
+    }];
+    
+    //UIProgressView *progressView;
+    self.sldProgress = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
+    self.sldProgress.progressTintColor = [UIColor redColor];
+    self.sldProgress.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    [[self.sldProgress layer]setFrame:CGRectMake(0, 8, 280, 40)];
+    //  [[self.sldProgress layer]setBorderColor:[UIColor redColor].CGColor];
+    self.sldProgress.trackTintColor = [UIColor whiteColor];
+    // [progressView setProgress:(float)(50/100) animated:YES];  ///15
+    //[[progressView layer]setCornerRadius:progressView.frame.size.width / 2];
+    //[[progressView layer]setBorderWidth:3];
+    // [[self.sldProgress layer]setMasksToBounds:TRUE];
+    //  self.sldProgress.clipsToBounds = YES;
+    [progressbarBGView addSubview:self.sldProgress];
+    [self.sldProgress mas_makeConstraints:^(MASConstraintMaker *make) {
+        // make.top.equalTo(progressbarBGView).with.offset(8);
+        make.centerY.equalTo(progressbarBGView);
+        make.left.equalTo(progressbarBGView).with.offset(50);
+        make.right.equalTo(progressbarBGView).with.offset(-6);
+        make.height.equalTo(@(4));
+    }];
+    
+    
+    //    ////////totaltimelabel Name label
+    self.totalDurationLabel = [UILabel new];
+    self.totalDurationLabel.backgroundColor = [UIColor clearColor];
+    self.totalDurationLabel.textAlignment = NSTextAlignmentCenter;
+    self.totalDurationLabel.textColor = [UIColor whiteColor];
+    [self.totalDurationLabel setFont:[UIFont systemFontOfSize:12]];
+    self.totalDurationLabel.text = @"00:00:00";
+    self.totalDurationLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    [progressbarBGView addSubview:self.totalDurationLabel];
+    [self.totalDurationLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(progressbarBGView).with.offset(2);
+        make.right.equalTo(progressbarBGView).with.offset(-6);
+        make.width.equalTo(@(54));
+        make.height.equalTo(@(20));
+    }];
+    //    ////////     /totaltimelabel Name label
+    UILabel *slaplabel = [UILabel new];
+    slaplabel.backgroundColor = [UIColor clearColor];
+    slaplabel.textAlignment = NSTextAlignmentCenter;
+    slaplabel.textColor = [UIColor whiteColor];
+    [slaplabel setFont:[UIFont systemFontOfSize:12]];
+    slaplabel.text = @"/";
+    slaplabel.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    [progressbarBGView addSubview:slaplabel];
+    [slaplabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(progressbarBGView).with.offset(2);
+        make.right.equalTo(progressbarBGView).with.offset(-66);
+        make.width.equalTo(@(4));
+        make.height.equalTo(@(20));
+    }];
+    
+    //    ////////     /CUrrentrunningtimelabel  label
+    self.CurrentTimeLabel = [UILabel new];
+    self.CurrentTimeLabel.backgroundColor = [UIColor clearColor];
+    self.CurrentTimeLabel.textAlignment = NSTextAlignmentCenter;
+    self.CurrentTimeLabel.textColor = [UIColor whiteColor];
+    [self.CurrentTimeLabel setFont:[UIFont systemFontOfSize:12]];
+    self.CurrentTimeLabel.text = @"00:00:00";
+    self.CurrentTimeLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    [progressbarBGView addSubview:self.CurrentTimeLabel];
+    [self.CurrentTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(progressbarBGView).with.offset(2);
+        make.right.equalTo(progressbarBGView).with.offset(-78);
+        make.width.equalTo(@(54));
+        make.height.equalTo(@(20));
+    }];
+    
+//    /////////// VIdeoPlayer Background VIeww/////////////
+//    videoPlayerBGView=[[UIView alloc]init];
+//    [videoPlayerBGView setBackgroundColor:[UIColor darkGrayColor]];
+//    [self.view addSubview:videoPlayerBGView];
+//    [videoPlayerBGView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.equalTo(self.view);
+//        make.left.equalTo(self.view).with.offset(0);
+//        make.height.equalTo(@(240));
+//        make.width.equalTo(@(self.view.frame.size.width));
+//    }];
     self.asset = [AVAsset assetWithURL:getSelectedVideoURL];
     AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:self.asset];
     self.player = [AVPlayer playerWithPlayerItem:item];
@@ -121,11 +247,20 @@
     self.playerLayer.contentsGravity = AVLayerVideoGravityResizeAspect;
     self.player.actionAtItemEnd = AVPlayerActionAtItemEndNone;
     [videoPlayerBGView.layer addSublayer:self.playerLayer];
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnVideoLayer:)];
-    [videoPlayerBGView addGestureRecognizer:tap];
-    self.videoPlaybackPosition = 0;
-    [self tapOnVideoLayer:tap];
+//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnVideoLayer:)];
+//    [videoPlayerBGView addGestureRecognizer:tap];
+//    self.videoPlaybackPosition = 0;
+//    [self tapOnVideoLayer:tap];
+    
+    
+    
+    
     /////////// VIdeoPlayer Background VIeww/////////////
+    if(self.asset == nil)
+    {
+        
+    }else
+    {
     self.trimmerView = [[ICGVideoTrimmerView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - 120, self.view.frame.size.width, 120) asset:self.asset];
     [self.trimmerView setBackgroundColor:[UIColor redColor]];
     // set properties for trimmer view
@@ -137,6 +272,9 @@
     [self.trimmerView setDelegate:self];
     [self.trimButton setHidden:NO];
     [self.view addSubview:self.trimmerView];
+        [self.trimmerView resetSubviews];
+
+    }
 //    [self.trimmerView mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.bottom.equalTo(self.view).with.offset(0);
 //        make.left.equalTo(self.view).with.offset(10);
@@ -145,14 +283,57 @@
 //        make.height.equalTo(@(120));
 //    }];
     //important: reset subviews
-    [self.trimmerView resetSubviews];
     // Do any additional setup after loading the view.
+    
+    
+    
+}
+- (void) viewDidAppear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationClosing:) name:
+     UIApplicationWillResignActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationOpening:) name:
+     UIApplicationWillEnterForegroundNotification object:nil];
+    
+    //   [self loadVideosToPlayer];
+    NSMutableArray *videos = [[NSMutableArray alloc] init];
+    NSMutableDictionary *video = nil;
+    
+    //NSURL *web = [NSURL URLWithString:@"http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"];
+    video = [[NSMutableDictionary alloc] init];
+    [video setObject:getSelectedVideoURL forKey:OLCPlayerVideoURL];
+    [video setValue:@0 forKey:OLCPlayerPlayTime];
+    [videos addObject:video];
+    
+    playlist = videos;
+    
+    [self.vidplayer playVideos:playlist];
+    [self.vidplayer continusPlay:YES];
+    [self.vidplayer shuffleVideos:NO];
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.vidplayer setDelegate:nil];
+    [self.vidplayer pause];
 }
 -(void) backbtnClicked:(UIButton*)sender
 {
     ViewController *VC = [self.storyboard instantiateViewControllerWithIdentifier:@"ViewController"];
     [self presentViewController:VC animated:YES completion:nil];
     
+}
+-(void) playpausebtn:(UIButton*)sender
+{
+    if([self.vidplayer isPlaying])
+    {
+        [self.vidplayer pause];
+    }
+    else
+    {
+        [self.vidplayer play];
+    }
 }
 -(void) buttonClicked:(UIButton*)sender
 {
@@ -215,6 +396,7 @@
     self.stopTime = endTime;
     
 }
+
 #pragma mark - Actions
 - (void)deleteTempFile
 {
@@ -330,6 +512,141 @@
     //NSLog(@"seekVideoToPos time:%.2f", CMTimeGetSeconds(time));
     [self.player seekToTime:time toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
 }
+#pragma mark - OLCVideoPlayer Init
+
+- (void) loadVideosToPlayer
+{
+    NSMutableArray *videos = [[NSMutableArray alloc] init];
+    NSMutableDictionary *video = nil;
+    
+    //Video 1
+    NSURL *fileURL1 = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"SampleVideo_1" ofType:@"mp4"]];
+    video = [[NSMutableDictionary alloc] init];
+    [video setObject:fileURL1 forKey:OLCPlayerVideoURL];
+    [video setValue:@0 forKey:OLCPlayerPlayTime];
+    [videos addObject:video];
+    
+    //Video 2
+    NSURL *fileURL2 = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"SampleVideo_2" ofType:@"mp4"]];
+    video = [[NSMutableDictionary alloc] init];
+    [video setObject:fileURL2 forKey:OLCPlayerVideoURL];
+    [video setValue:@0 forKey:OLCPlayerPlayTime];
+    [videos addObject:video];
+    
+    //Video 3
+    NSURL *fileURL3 = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"SampleVideo_3" ofType:@"mp4"]];
+    video = [[NSMutableDictionary alloc] init];
+    [video setObject:fileURL3 forKey:OLCPlayerVideoURL];
+    [video setValue:@0 forKey:OLCPlayerPlayTime];
+    [videos addObject:video];
+    
+    //Video 4
+    NSURL *web = [NSURL URLWithString:@"http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"];
+    video = [[NSMutableDictionary alloc] init];
+    [video setObject:web forKey:OLCPlayerVideoURL];
+    [video setValue:@0 forKey:OLCPlayerPlayTime];
+    [videos addObject:video];
+    
+    playlist = videos;
+    
+    [self.vidplayer playVideos:playlist];
+}
+
+#pragma mark - OLCVideoPlayer Controlls
+
+- (IBAction)btnPlayPauseClicked:(id)sender {
+    
+    if([self.vidplayer isPlaying])
+    {
+        [self.vidplayer pause];
+    }
+    else
+    {
+        [self.vidplayer play];
+    }
+}
+
+- (IBAction)btnNextClicked:(id)sender {
+    
+    [self.vidplayer playNext];
+}
+
+- (IBAction)btnPreviousClicked:(id)sender {
+    
+    [self.vidplayer playPrevious];
+}
+
+- (IBAction)sldVolumeChanged:(id)sender {
+    
+    float volume = ((UISlider*) sender).value;
+    [self.vidplayer setVolume:volume];
+}
+
+- (IBAction)btnStopClicked:(id)sender {
+    
+    [self.vidplayer shutdown];
+}
+
+#pragma mark - OLCVideoPlayer Delegates
+
+- (void) onVideoTrackChanged:(NSUInteger)index
+{
+    //self.sldVolume.value = [self.vidplayer getVolume];
+}
+
+- (void) onFinishPlaying:(NSUInteger)index
+{
+    
+}
+
+- (void) onPause:(NSUInteger)index
+{
+    // [self.btnPlayPause setTitle:@"Play" forState:UIControlStateNormal];
+    [self.btnPlayPause setImage:[UIImage imageNamed:@"playicon.png"] forState:UIControlStateNormal];
+    
+}
+
+- (void) onPlay:(NSUInteger)index
+{
+    // [self.btnPlayPause setTitle:@"Pause" forState:UIControlStateNormal];
+    [self.btnPlayPause setImage:[UIImage imageNamed:@"pauseicon.png"] forState:UIControlStateNormal];
+    
+}
+
+//this get called every 0.5 seconds with video duration and current playtime so we can update our progress bars
+- (void) onPlayInfoUpdate:(double)current withDuration:(double)duration
+{
+    float progress = ( current / duration );
+    self.sldProgress.progress = progress;
+    
+    self.CurrentTimeLabel.text = [self stringFromSeconds:current];
+    self.totalDurationLabel.text = [self stringFromSeconds:duration];
+}
+
+#pragma mark - notifications
+
+- (void) applicationClosing:(NSNotification *)notification
+{
+    [self.vidplayer playInBackground];
+}
+
+- (void) applicationOpening:(NSNotification *)notification
+{
+    [self.vidplayer playInForeground];
+}
+
+#pragma mark - private
+
+- (NSString *) stringFromSeconds:(double) value
+{
+    NSTimeInterval interval = value;
+    NSInteger ti = (NSInteger)interval;
+    NSInteger seconds = ti % 60;
+    NSInteger minutes = (ti / 60) % 60;
+    NSInteger hours = (ti / 3600);
+    return [NSString stringWithFormat:@"%02ld:%02ld:%02ld", (long)hours, (long)minutes, (long)seconds];
+}
+
 /*
 #pragma mark - Navigation
 
