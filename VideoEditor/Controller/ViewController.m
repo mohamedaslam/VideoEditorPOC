@@ -21,7 +21,6 @@
 {
     UICollectionView *_collectionView;
     UIView *titleBarBGView;
-   // UIView *videoPlayerBGView;
     UIButton *uparrowbtn;
     UIButton *donebtn;
     UIButton *playbtn;
@@ -40,11 +39,8 @@
 @property (strong, nonatomic) UILabel *CurrentTimeLabel;
 @property (strong, nonatomic) UILabel *totalDurationLabel;
 @property (strong,nonatomic)UIView *progressbarBGView;
-
-
 @property (nonatomic, strong) ALAssetsLibrary *assetsLibrary;
 @property (nonatomic, strong) NSURL *videoURL;
-//@property (nonatomic, strong) MPMoviePlayerController *mpVideoPlayer;
 @property (nonatomic, strong) NSMutableArray *videoURLArray;
 @property (nonatomic, strong) NSMutableArray *imagesTHumbnailarray;
 @property (nonatomic, strong) NSMutableArray *videosTitlearray;
@@ -119,17 +115,6 @@
         make.width.equalTo(@(40));
     }];
     
-//    ////////videoPlayerBGView
-//     videoPlayerBGView=[[UIView alloc]init];
-//    [videoPlayerBGView setBackgroundColor:[UIColor darkGrayColor]];
-//    [self.view addSubview:videoPlayerBGView];
-//    [videoPlayerBGView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.view).with.offset(70);
-//        make.left.equalTo(self.view).with.offset(0);
-//        make.height.equalTo(@(180));
-//        make.width.equalTo(@(self.view.frame.size.width));
-//    }];
-
     ////////List of Vdeos CollectionView
     UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
     _collectionView=[[UICollectionView alloc] initWithFrame:CGRectMake(0, 70, self.view.frame.size.width, 400) collectionViewLayout:layout];
@@ -145,13 +130,13 @@
         make.bottom.equalTo(self.view).with.offset(0);
         make.right.equalTo(self.view).with.offset(0);
 }];
-    self.vidplayer = [[OLCVideoPlayer alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 180)];
-    [self.vidplayer setBackgroundColor:[UIColor darkGrayColor]];
-    self.vidplayer.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:self.vidplayer];
-    [self.vidplayer setHidden:true];
+     self.vidplayer = [[OLCVideoPlayer alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 180)];
+     [self.vidplayer setBackgroundColor:[UIColor darkGrayColor]];
+     self.vidplayer.translatesAutoresizingMaskIntoConstraints = NO;
+     [self.view addSubview:self.vidplayer];
+     [self.vidplayer setHidden:true];
      [self playPauseControllerMethods];
-  [self buildAssetsLibrary];
+     [self buildAssetsLibrary];
 }
 -(void)playPauseControllerMethods{
 
@@ -163,18 +148,13 @@
     }];
     [self.vidplayer setDelegate:self];
     
-    
-    
-    
-    
     /////////
     self.progressbarBGView=[[UIView alloc]init];
     self.progressbarBGView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.progressbarBGView setBackgroundColor:[UIColor blackColor]];
-    [self.progressbarBGView setAlpha:0.4];
+    [self.progressbarBGView setAlpha:0.6];
     [self.vidplayer addSubview:self.progressbarBGView];
     [self.progressbarBGView setHidden:true];
-    //    UIEdgeInsets padding = UIEdgeInsetsMake(20, 0, 0, 0);
     [self.progressbarBGView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.vidplayer.mas_bottom).with.offset(0);
         make.left.equalTo(self.vidplayer.mas_left).with.offset(0);
@@ -184,7 +164,7 @@
     ////////Play/Pause button
     self.btnPlayPause = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.btnPlayPause addTarget:self action:@selector(playpausebtn:) forControlEvents:UIControlEventTouchUpInside];
-    [self.btnPlayPause setBackgroundColor:[UIColor redColor]];
+    [self.btnPlayPause setBackgroundColor:[UIColor clearColor]];
     [self.btnPlayPause setImage:[UIImage imageNamed:@"playicon.png"] forState:UIControlStateNormal];
     [self.btnPlayPause setExclusiveTouch:YES];
     [self.progressbarBGView addSubview:self.btnPlayPause];
@@ -195,30 +175,21 @@
         make.height.equalTo(@(40));
     }];
     
-    //UIProgressView *progressView;
     self.sldProgress = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
     self.sldProgress.progressTintColor = [UIColor redColor];
     self.sldProgress.translatesAutoresizingMaskIntoConstraints = NO;
     
     [[self.sldProgress layer]setFrame:CGRectMake(0, 8, 280, 40)];
-    //  [[self.sldProgress layer]setBorderColor:[UIColor redColor].CGColor];
     self.sldProgress.trackTintColor = [UIColor whiteColor];
-    // [progressView setProgress:(float)(50/100) animated:YES];  ///15
-    //[[progressView layer]setCornerRadius:progressView.frame.size.width / 2];
-    //[[progressView layer]setBorderWidth:3];
-    // [[self.sldProgress layer]setMasksToBounds:TRUE];
-    //  self.sldProgress.clipsToBounds = YES;
     [self.progressbarBGView addSubview:self.sldProgress];
     [self.sldProgress mas_makeConstraints:^(MASConstraintMaker *make) {
-        // make.top.equalTo(progressbarBGView).with.offset(8);
         make.centerY.equalTo(self.progressbarBGView);
         make.left.equalTo(self.progressbarBGView).with.offset(50);
         make.right.equalTo(self.progressbarBGView).with.offset(-6);
         make.height.equalTo(@(4));
     }];
     
-    
-    //    ////////totaltimelabel Name label
+     ////////totaltimelabel Name label
     self.totalDurationLabel = [UILabel new];
     self.totalDurationLabel.backgroundColor = [UIColor clearColor];
     self.totalDurationLabel.textAlignment = NSTextAlignmentCenter;
@@ -226,7 +197,6 @@
     [self.totalDurationLabel setFont:[UIFont systemFontOfSize:12]];
     self.totalDurationLabel.text = @"00:00:00";
     self.totalDurationLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    
     [self.progressbarBGView addSubview:self.totalDurationLabel];
     [self.totalDurationLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.progressbarBGView).with.offset(2);
@@ -234,7 +204,7 @@
         make.width.equalTo(@(54));
         make.height.equalTo(@(20));
     }];
-    //    ////////     /totaltimelabel Name label
+    ////////     /totaltimelabel Name label
     UILabel *slaplabel = [UILabel new];
     slaplabel.backgroundColor = [UIColor clearColor];
     slaplabel.textAlignment = NSTextAlignmentCenter;
@@ -242,7 +212,6 @@
     [slaplabel setFont:[UIFont systemFontOfSize:12]];
     slaplabel.text = @"/";
     slaplabel.translatesAutoresizingMaskIntoConstraints = NO;
-    
     [self.progressbarBGView addSubview:slaplabel];
     [slaplabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.progressbarBGView).with.offset(2);
@@ -259,7 +228,6 @@
     [self.CurrentTimeLabel setFont:[UIFont systemFontOfSize:12]];
     self.CurrentTimeLabel.text = @"00:00:00";
     self.CurrentTimeLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    
     [self.progressbarBGView addSubview:self.CurrentTimeLabel];
     [self.CurrentTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.progressbarBGView).with.offset(2);
@@ -270,12 +238,10 @@
 }
 -(void) playpausebtn:(UIButton*)sender
 {
-    if([self.vidplayer isPlaying])
-    {
+    if([self.vidplayer isPlaying]){
         [self.vidplayer pause];
     }
-    else
-    {
+    else{
         [self.vidplayer play];
     }
 }
@@ -285,8 +251,6 @@
 {
     [self.vidplayer setHidden:true];
     [self.progressbarBGView setHidden:true];
-
-    //////Hide Player
     [_collectionView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view).with.offset(70);
         make.left.equalTo(self.view).with.offset(0);
@@ -297,7 +261,6 @@
     [uparrowbtn setHidden:true];
      [self.vidplayer setDelegate:nil];
     [self.vidplayer pause];
-    //[self.vidplayer removeFromSuperview];
     [self.vidplayer setHidden:true];
 
 }
@@ -311,7 +274,6 @@
 -(void) pausebtnClicked:(UIButton*)sender
 {
     [player pause];
-    
 }
 
 #pragma mark - CollectionView Methods
@@ -360,54 +322,21 @@
         make.width.equalTo(@(self.view.frame.size.width));
     }];
     [self.vidplayer setDelegate:self];
-    
-//    self.vidplayer = [[OLCVideoPlayer alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 240)];
-//    [self.vidplayer setBackgroundColor:[UIColor darkGrayColor]];
-//    self.vidplayer.translatesAutoresizingMaskIntoConstraints = NO;
-////    [self.view addSubview:self.vidplayer];
-//    [self.vidplayer mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.view).with.offset(10);
-//        make.left.equalTo(self.view).with.offset(0);
-//        make.right.equalTo(self.view).with.offset(0);
-//        make.height.equalTo(@(180));
-//    }];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationClosing:) name:
      UIApplicationWillResignActiveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationOpening:) name:
      UIApplicationWillEnterForegroundNotification object:nil];
-    
-    //   [self loadVideosToPlayer];
     NSMutableArray *videos = [[NSMutableArray alloc] init];
     NSMutableDictionary *video = nil;
-    
-    //NSURL *web = [NSURL URLWithString:@"http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"];
     video = [[NSMutableDictionary alloc] init];
     [video setObject:getSelectedURl forKey:OLCPlayerVideoURL];
     [video setValue:@0 forKey:OLCPlayerPlayTime];
     [videos addObject:video];
-    
     playlist = videos;
-    
     [self.vidplayer playVideos:playlist];
     [self.vidplayer continusPlay:NO];
     [self.vidplayer shuffleVideos:NO];
-  //  [self.vidplayer setDelegate:self];
-    
-    
-    
-//    AVPlayerItem* playerItem = [AVPlayerItem playerItemWithURL:[_videosURLArray objectAtIndex:indexPath.row]];
-//    player = [[AVPlayer alloc] initWithPlayerItem:playerItem];
-//    layer = [AVPlayerLayer layer];
-//    [layer setPlayer:player];
-//    [layer setFrame:CGRectMake(10, 10, videoPlayerBGView.frame.size.width-20, videoPlayerBGView.frame.size.height-20)];
-//    [layer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
-//    [videoPlayerBGView.layer addSublayer:layer];
-//    [player play];
-    
-    
-    
     [_collectionView reloadData];
-   
 }
 
 #pragma mark - Show Video List Methods
@@ -424,7 +353,6 @@
     NSString *systemVersion = [[UIDevice currentDevice] systemVersion];
     if ([systemVersion compare:minimumSystemVersion options:NSNumericSearch] != NSOrderedAscending)
         notificationSender = assetsLibrary;
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(assetsLibraryDidChange:) name:ALAssetsLibraryChangedNotification object:notificationSender];
     [self updateAssetsLibrary];
 }
 - (void) dealloc
@@ -438,7 +366,8 @@
     layer = nil;
     [self.vidplayer setDelegate:nil];
     [self.vidplayer pause];
-    
+    self.vidplayer = nil;
+    [self.vidplayer removeFromSuperview];
 }
 - (void)assetsLibraryDidChange:(NSNotification*)changeNotification
 {
@@ -449,7 +378,6 @@
 {
     assetItems = [NSMutableArray arrayWithCapacity:0];
     ALAssetsLibrary *assetLibrary = assetsLibrary;
-    
     [assetLibrary enumerateGroupsWithTypes:ALAssetsGroupAll usingBlock:^(ALAssetsGroup *group, BOOL *stop)
      {
          if (group)
@@ -472,10 +400,8 @@
                       AssetBrowserItem *item = [[AssetBrowserItem alloc] initWithURL:videoURL title:title];
                       [assetItems addObject:item];
                       [videoURLArray addObject:dic];
-                      
                   }
-                  
-                  _imagesTHumbnailarray = [videoURLArray valueForKey:@"ImageThumbnail"];
+                _imagesTHumbnailarray = [videoURLArray valueForKey:@"ImageThumbnail"];
                   _videosTitlearray = [videoURLArray valueForKey:@"VideoTitle"];
                   _videosURLArray = [videoURLArray valueForKey:@"VideoUrl"];
                   [_collectionView reloadData];
@@ -494,16 +420,13 @@
 
 - (UIImage *)imageFromVideoURL
 {
-    
     UIImage *image = nil;
     AVAsset *asset = [[AVURLAsset alloc] initWithURL:videoURL options:nil];;
     AVAssetImageGenerator *imageGenerator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
     imageGenerator.appliesPreferredTrackTransform = YES;
-    
     // calc midpoint time of video
     Float64 durationSeconds = CMTimeGetSeconds([asset duration]);
     CMTime midpoint = CMTimeMakeWithSeconds(durationSeconds/2.0, 600);
-    
     // get the image from
     NSError *error = nil;
     CMTime actualTime;
@@ -523,18 +446,16 @@
 
 - (IBAction)btnPlayPauseClicked:(id)sender {
     
-    if([self.vidplayer isPlaying])
-    {
+    if([self.vidplayer isPlaying]){
         [self.vidplayer pause];
     }
-    else
-    {
+    else{
         [self.vidplayer play];
     }
 }
 
 - (IBAction)btnNextClicked:(id)sender {
-    
+          
     [self.vidplayer playNext];
 }
 
@@ -561,21 +482,17 @@
   //  self.sldVolume.value = [self.vidplayer getVolume];
 }
 
-- (void) onFinishPlaying:(NSUInteger)index
-{
-    
+- (void) onFinishPlaying:(NSUInteger)index{
 }
 
 - (void) onPause:(NSUInteger)index
 {
-    // [self.btnPlayPause setTitle:@"Play" forState:UIControlStateNormal];
     [self.btnPlayPause setImage:[UIImage imageNamed:@"playicon.png"] forState:UIControlStateNormal];
     
 }
 
 - (void) onPlay:(NSUInteger)index
 {
-    // [self.btnPlayPause setTitle:@"Pause" forState:UIControlStateNormal];
     [self.btnPlayPause setImage:[UIImage imageNamed:@"pauseicon.png"] forState:UIControlStateNormal];
     
 }
@@ -585,7 +502,6 @@
 {
     float progress = ( current / duration );
     self.sldProgress.progress = progress;
-    
     self.CurrentTimeLabel.text = [self stringFromSeconds:current];
     self.totalDurationLabel.text = [self stringFromSeconds:duration];
 }

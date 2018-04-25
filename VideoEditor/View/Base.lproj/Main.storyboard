@@ -35,10 +35,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="IeK-4n-4Zf"/>
                     </view>
+                    <navigationItem key="navigationItem" id="YUZ-AA-RQL"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UNJ-48-YK8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="488.80000000000001" y="115.59220389805098"/>
+            <point key="canvasLocation" x="828" y="115.59220389805098"/>
         </scene>
         <!--Crop VideoVC-->
         <scene sceneID="xQe-8Q-Qvi">
@@ -50,10 +51,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="JPC-mY-IhK"/>
                     </view>
+                    <navigationItem key="navigationItem" id="oZ5-om-ate"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Coo-B5-ZA8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1160.8" y="115.59220389805098"/>
+            <point key="canvasLocation" x="1839.2" y="115.59220389805098"/>
         </scene>
     </scenes>
 </document>

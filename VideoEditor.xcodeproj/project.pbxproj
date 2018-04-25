@@ -191,8 +191,6 @@
 				AE11F02020876AF600C86007 /* TrimVideoVC.m */,
 				AE1DE372208DEE31004E8516 /* CropVideoVC.h */,
 				AE1DE373208DEE31004E8516 /* CropVideoVC.m */,
-				AEAC1DF3208F15C90034F291 /* playicon.png */,
-				AEAC1DF5208F15CF0034F291 /* pauseicon.png */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -210,6 +208,8 @@
 		AE11F01E208767EB00C86007 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				AEAC1DF3208F15C90034F291 /* playicon.png */,
+				AEAC1DF5208F15CF0034F291 /* pauseicon.png */,
 				AE11F02220876EE600C86007 /* backBtn.png */,
 				AE19873E2086253200838898 /* doneimg.png */,
 				AE1987402086253800838898 /* arrowimg.png */,

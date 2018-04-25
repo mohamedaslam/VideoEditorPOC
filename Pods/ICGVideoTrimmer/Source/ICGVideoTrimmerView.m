@@ -66,7 +66,7 @@
 
 - (CGFloat)maxLength
 {
-    return _maxLength ?: 15;
+    return _maxLength ?: 20;
 }
 
 - (CGFloat)minLength

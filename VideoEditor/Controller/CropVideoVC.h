@@ -11,11 +11,6 @@
 
 @interface CropVideoVC : UIViewController
 @property(nonatomic,strong)NSURL *getSelectedURl;
-//@property (weak, nonatomic) IBOutlet OLCVideoPlayer *vidplayer;
+@property(nonatomic,strong)NSURL *getfullSelectedURl;
 
-//@property (weak, nonatomic) IBOutlet UIProgressView *sldProgress;
-//@property (weak, nonatomic) IBOutlet UILabel *lblCurrent;
-//@property (weak, nonatomic) IBOutlet UILabel *lblDuration;
-@property (weak, nonatomic) IBOutlet UISlider *sldVolume;
-//@property (weak, nonatomic) IBOutlet UIButton *btnPlayPause;
 @end
