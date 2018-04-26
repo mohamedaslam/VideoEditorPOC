@@ -130,7 +130,9 @@
         make.bottom.equalTo(self.view).with.offset(0);
         make.right.equalTo(self.view).with.offset(0);
 }];
-     self.vidplayer = [[OLCVideoPlayer alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 180)];
+
+    self.vidplayer = [[OLCVideoPlayer alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 180)];
+//    self.vidplayer.frame = CGRectMake(0, 0, self.view.frame.size.width, 180);
      [self.vidplayer setBackgroundColor:[UIColor darkGrayColor]];
      self.vidplayer.translatesAutoresizingMaskIntoConstraints = NO;
      [self.view addSubview:self.vidplayer];
@@ -260,15 +262,37 @@
     [titleNamelabel setHidden:false];
     [uparrowbtn setHidden:true];
      [self.vidplayer setDelegate:nil];
-    [self.vidplayer pause];
-    [self.vidplayer setHidden:true];
+//    [self.vidplayer shutdown];
 
 }
 -(void) DonebtnClicked:(UIButton*)sender
 {
+    if(getSelectedURl == nil)
+    {
+        UIAlertController * alert = [UIAlertController
+                                     alertControllerWithTitle:nil
+                                     message:@"Please select Video"
+                                     preferredStyle:UIAlertControllerStyleAlert];
+        
+        
+        
+        UIAlertAction* yesButton = [UIAlertAction
+                                    actionWithTitle:@"OK"
+                                    style:UIAlertActionStyleDefault
+                                    handler:^(UIAlertAction * action) {
+                                        //Handle your yes please button action here
+                                    }];
+        
+
+        
+        [alert addAction:yesButton];
+        
+        [self presentViewController:alert animated:YES completion:nil];
+    }else{
     TrimVideoVC*VC = [self.storyboard instantiateViewControllerWithIdentifier:@"TrimVideoVC"];
     VC.getSelectedVideoURL = getSelectedURl;
     [self presentViewController:VC animated:YES completion:nil];
+    }
     
 }
 -(void) pausebtnClicked:(UIButton*)sender
@@ -361,13 +385,13 @@
 }
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:YES];
-    [player pause];
-    [layer removeFromSuperlayer];
-    layer = nil;
-    [self.vidplayer setDelegate:nil];
+  //  [player pause];
+  //  [layer removeFromSuperlayer];
+  //  layer = nil;
+   // [self.vidplayer setDelegate:nil];
     [self.vidplayer pause];
-    self.vidplayer = nil;
-    [self.vidplayer removeFromSuperview];
+   // self.vidplayer = nil;
+   // [self.vidplayer removeFromSuperview];
 }
 - (void)assetsLibraryDidChange:(NSNotification*)changeNotification
 {

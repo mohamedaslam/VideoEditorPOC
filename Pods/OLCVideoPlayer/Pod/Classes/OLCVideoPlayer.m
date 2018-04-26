@@ -282,6 +282,11 @@ NSString *const OLCPlayerPlayTime = @"OLCPlayerPlayTime";
     playerCtrl.frame  = playframe;
     playerCtrl.player.allowsExternalPlayback = NO; //this allow airplay for some reason
     playerCtrl.player.usesExternalPlaybackWhileExternalScreenIsActive = YES;
+//    [playerCtrl setAffineTransform:CGAffineTransformMakeRotation(M_PI/2)];
+    
+//    [_playerLayer setAffineTransform:CGAffineTransformMakeRotation(degreeToRadian(degree))];
+//
+//    playerCtrl.setAffineTransform = CGAffineTransformMakeRotation(M_PI/2);
     playerCtrl.videoGravity = AVLayerVideoGravityResizeAspect;
     
     [self.layer addSublayer:playerCtrl];
@@ -330,7 +335,30 @@ NSString *const OLCPlayerPlayTime = @"OLCPlayerPlayTime";
     playerCtrl.player = tAVPlayer;
     
     playerCtrl.player.volume = volumeLevel;
+    NSArray *tracks = [composition tracksWithMediaType:AVMediaTypeVideo];
     
+    CGSize videoSize = CGSizeZero;
+    if ([tracks count] != 0)
+    {
+        AVAssetTrack *videoTrack = [tracks objectAtIndex:0];
+        videoSize = videoTrack.naturalSize;
+        
+        CGRect videoRect = CGRectMake(0.0, 0.0, videoSize.width, videoSize.height);
+        videoRect = CGRectApplyAffineTransform(videoRect, videoTrack.preferredTransform);
+        
+        if (videoRect.size.height > videoRect.size.width)
+        {
+            NSLog(@"Portrait mode");
+        }
+        else if (videoRect.size.height < videoRect.size.width)
+        {
+            NSLog(@"Landscape mode");
+        }
+        else
+        {
+            NSLog(@"Square mode");
+        }
+    }
     
 //    //loop option 2
 //    AVAsset *composition = [self makeAssetComposition:fileURL];

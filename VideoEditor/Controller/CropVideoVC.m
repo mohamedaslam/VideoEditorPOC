@@ -100,6 +100,7 @@
        
    
     self.vidplayer = [[OLCVideoPlayer alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 240)];
+ //   self.vidplayer.frame = CGRectMake(0, 0, self.view.frame.size.width, 240);
     [self.vidplayer setBackgroundColor:[UIColor darkGrayColor]];
     self.vidplayer.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.vidplayer];
@@ -235,10 +236,10 @@
 - (void) viewWillDisappear:(BOOL)animated
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self.vidplayer setDelegate:nil];
-    [self.vidplayer pause];
-    self.vidplayer = nil;
-    [self.vidplayer removeFromSuperview];
+   // [self.vidplayer setDelegate:nil];
+    [self.vidplayer shutdown];
+   // self.vidplayer = nil;
+//    [self.vidplayer removeFromSuperview];
 }
 - (void)viewDidLayoutSubviews{
 

@@ -114,6 +114,7 @@
         make.width.equalTo(@(40));
     }];
     
+
     self.vidplayer = [[OLCVideoPlayer alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 240)];
     [self.vidplayer setBackgroundColor:[UIColor darkGrayColor]];
     self.vidplayer.translatesAutoresizingMaskIntoConstraints = NO;
@@ -271,10 +272,10 @@
 - (void) viewWillDisappear:(BOOL)animated
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self.vidplayer setDelegate:nil];
-    [self.vidplayer pause];
-    [self.vidplayer removeFromSuperview];
-    self.vidplayer = nil;
+   // [self.vidplayer setDelegate:nil];
+    [self.vidplayer shutdown];
+  //  [self.vidplayer removeFromSuperview];
+    //self.vidplayer = nil;
 }
 -(void) backbtnClicked:(UIButton*)sender
 {
@@ -457,8 +458,8 @@
 
     [self.player pause];
     
-    [self.playerLayer removeFromSuperlayer];
-    self.playerLayer = nil;
+  //  [self.playerLayer removeFromSuperlayer];
+  //  self.playerLayer = nil;
     
 }
 - (void)seekVideoToPos:(CGFloat)pos
