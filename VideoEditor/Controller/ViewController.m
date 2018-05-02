@@ -360,6 +360,8 @@
     [self.vidplayer playVideos:playlist];
     [self.vidplayer continusPlay:NO];
     [self.vidplayer shuffleVideos:NO];
+//    self.vidplayer.transform = CGAffineTransformRotate(self.vidplayer.transform, M_PI_2);
+
     [_collectionView reloadData];
 }
 

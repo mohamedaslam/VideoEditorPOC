@@ -8,9 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "OLCVideoPlayer.h"
-
+#import <AssetsLibrary/AssetsLibrary.h>
+#import <MediaPlayer/MediaPlayer.h>
+#import <AVFoundation/AVFoundation.h>
+#import "ICGVideoTrimmerView.h"
+#import <MobileCoreServices/MobileCoreServices.h>
 @interface CropVideoVC : UIViewController
 @property(nonatomic,strong)NSURL *getSelectedURl;
 @property(nonatomic,strong)NSURL *getfullSelectedURl;
+@property (nonatomic) AVAssetExportSession *exporter;
 
 @end

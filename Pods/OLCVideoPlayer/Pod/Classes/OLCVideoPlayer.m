@@ -283,7 +283,7 @@ NSString *const OLCPlayerPlayTime = @"OLCPlayerPlayTime";
     playerCtrl.player.allowsExternalPlayback = NO; //this allow airplay for some reason
     playerCtrl.player.usesExternalPlaybackWhileExternalScreenIsActive = YES;
 //    [playerCtrl setAffineTransform:CGAffineTransformMakeRotation(M_PI/2)];
-    
+
 //    [_playerLayer setAffineTransform:CGAffineTransformMakeRotation(degreeToRadian(degree))];
 //
 //    playerCtrl.setAffineTransform = CGAffineTransformMakeRotation(M_PI/2);
@@ -335,30 +335,71 @@ NSString *const OLCPlayerPlayTime = @"OLCPlayerPlayTime";
     playerCtrl.player = tAVPlayer;
     
     playerCtrl.player.volume = volumeLevel;
-    NSArray *tracks = [composition tracksWithMediaType:AVMediaTypeVideo];
-    
-    CGSize videoSize = CGSizeZero;
-    if ([tracks count] != 0)
-    {
-        AVAssetTrack *videoTrack = [tracks objectAtIndex:0];
-        videoSize = videoTrack.naturalSize;
-        
-        CGRect videoRect = CGRectMake(0.0, 0.0, videoSize.width, videoSize.height);
-        videoRect = CGRectApplyAffineTransform(videoRect, videoTrack.preferredTransform);
-        
-        if (videoRect.size.height > videoRect.size.width)
-        {
-            NSLog(@"Portrait mode");
-        }
-        else if (videoRect.size.height < videoRect.size.width)
-        {
-            NSLog(@"Landscape mode");
-        }
-        else
-        {
-            NSLog(@"Square mode");
-        }
-    }
+
+
+//    NSArray *tracks = [composition tracksWithMediaType:AVMediaTypeVideo];
+//
+//    CGSize videoSize = CGSizeZero;
+//
+//
+//    if ([tracks count] != 0)
+//    {
+//        AVAssetTrack *videoTrack = [tracks objectAtIndex:0];
+//        videoSize = videoTrack.naturalSize;
+//
+//        CGRect videoRect = CGRectMake(0.0, 0.0, videoSize.width, videoSize.height);
+//        videoRect = CGRectApplyAffineTransform(videoRect, videoTrack.preferredTransform);
+//
+//
+//        AVMutableVideoComposition* videoComposition = [AVMutableVideoComposition videoComposition];
+//        videoComposition.renderSize = CGSizeMake(320, 240);
+//        videoComposition.frameDuration = CMTimeMake(1, 30);
+//
+//        AVMutableVideoCompositionInstruction *instruction = [AVMutableVideoCompositionInstruction videoCompositionInstruction];
+//        instruction.timeRange = CMTimeRangeMake(kCMTimeZero, CMTimeMakeWithSeconds(60, 30) );
+//
+//        AVMutableVideoCompositionLayerInstruction* rotator = [AVMutableVideoCompositionLayerInstruction videoCompositionLayerInstructionWithAssetTrack:[[composition tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0]];
+//        CGAffineTransform translateToCenter = CGAffineTransformMakeTranslation( 0,-320);
+//        CGAffineTransform rotateBy90Degrees = CGAffineTransformMakeRotation( M_PI_2);
+//        CGAffineTransform shrinkWidth = CGAffineTransformMakeScale(0.66, 1); // needed because Apple does a "stretch" by default - really, we should find and undo apple's stretch - I suspect it'll be a CALayer defaultTransform, or UIView property causing this
+//        CGAffineTransform finalTransform = CGAffineTransformConcat( shrinkWidth, CGAffineTransformConcat(translateToCenter, rotateBy90Degrees) );
+//        [rotator setTransform:finalTransform atTime:kCMTimeZero];
+//
+//        instruction.layerInstructions = [NSArray arrayWithObject: rotator];
+//        videoComposition.instructions = [NSArray arrayWithObject: instruction];
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//        if (videoRect.size.width > videoRect.size.height){
+//
+//            NSLog(@"Landscape mode");
+//
+//        }else{
+//
+//            NSLog(@"Portrait mode");
+//        }
+////        if (videoRect.size.height > videoRect.size.width)
+////        {
+////            NSLog(@"Portrait mode");
+////        }
+////        else if (videoRect.size.height < videoRect.size.width)
+////        {
+////            NSLog(@"Landscape mode");
+////        }
+////        else
+////        {
+////            NSLog(@"Square mode");
+////        }
+//    }
     
 //    //loop option 2
 //    AVAsset *composition = [self makeAssetComposition:fileURL];
