@@ -23,8 +23,10 @@
 		AE7266BF2084A47800C34411 /* VideoEditorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AE7266BE2084A47800C34411 /* VideoEditorTests.m */; };
 		AE7266CA2084A47800C34411 /* VideoEditorUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = AE7266C92084A47800C34411 /* VideoEditorUITests.m */; };
 		AE8AD7D12084AB8B00E20E37 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8AD7D02084AB8B00E20E37 /* Photos.framework */; };
+		AE8F579E209AF13A00E71B87 /* ListCropSizesCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AE8F579D209AF13A00E71B87 /* ListCropSizesCollectionViewCell.m */; };
 		AEAC1DF4208F15C90034F291 /* playicon.png in Resources */ = {isa = PBXBuildFile; fileRef = AEAC1DF3208F15C90034F291 /* playicon.png */; };
 		AEAC1DF6208F15CF0034F291 /* pauseicon.png in Resources */ = {isa = PBXBuildFile; fileRef = AEAC1DF5208F15CF0034F291 /* pauseicon.png */; };
+		AEBF19FD20A1CE8700353419 /* SaveCropVideoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AEBF19FC20A1CE8700353419 /* SaveCropVideoVC.m */; };
 		AECCA1022084C08E00F933A7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AECCA1012084C08E00F933A7 /* AVFoundation.framework */; };
 		AECCA1042084C09400F933A7 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AECCA1032084C09400F933A7 /* AssetsLibrary.framework */; };
 		AECCA1062084C09E00F933A7 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AECCA1052084C09E00F933A7 /* MediaPlayer.framework */; };
@@ -87,8 +89,12 @@
 		AE7266CB2084A47800C34411 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AE785908F3BEE946667C9179 /* libPods-VideoEditorUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VideoEditorUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE8AD7D02084AB8B00E20E37 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
+		AE8F579C209AF13A00E71B87 /* ListCropSizesCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListCropSizesCollectionViewCell.h; sourceTree = "<group>"; };
+		AE8F579D209AF13A00E71B87 /* ListCropSizesCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListCropSizesCollectionViewCell.m; sourceTree = "<group>"; };
 		AEAC1DF3208F15C90034F291 /* playicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playicon.png; sourceTree = "<group>"; };
 		AEAC1DF5208F15CF0034F291 /* pauseicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pauseicon.png; sourceTree = "<group>"; };
+		AEBF19FB20A1CE8700353419 /* SaveCropVideoVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SaveCropVideoVC.h; sourceTree = "<group>"; };
+		AEBF19FC20A1CE8700353419 /* SaveCropVideoVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SaveCropVideoVC.m; sourceTree = "<group>"; };
 		AECCA1012084C08E00F933A7 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		AECCA1032084C09400F933A7 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		AECCA1052084C09E00F933A7 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -181,6 +187,8 @@
 				AE7266B02084A47800C34411 /* LaunchScreen.storyboard */,
 				AE1987372085C40900838898 /* ListCollectionViewCell.h */,
 				AE1987382085C40900838898 /* ListCollectionViewCell.m */,
+				AE8F579C209AF13A00E71B87 /* ListCropSizesCollectionViewCell.h */,
+				AE8F579D209AF13A00E71B87 /* ListCropSizesCollectionViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -194,6 +202,8 @@
 				AE11F02020876AF600C86007 /* TrimVideoVC.m */,
 				AE1DE372208DEE31004E8516 /* CropVideoVC.h */,
 				AE1DE373208DEE31004E8516 /* CropVideoVC.m */,
+				AEBF19FB20A1CE8700353419 /* SaveCropVideoVC.h */,
+				AEBF19FC20A1CE8700353419 /* SaveCropVideoVC.m */,
 				AEFB339F2091BBED009D050C /* PlayerManagerClass.h */,
 				AEFB33A02091BBED009D050C /* PlayerManagerClass.m */,
 			);
@@ -287,7 +297,6 @@
 				AE72669E2084A47600C34411 /* Sources */,
 				AE72669F2084A47600C34411 /* Frameworks */,
 				AE7266A02084A47600C34411 /* Resources */,
-				764F050C429C29722B9FDAAD /* [CP] Embed Pods Frameworks */,
 				E4934CA3E5304B2FFDDCF64E /* [CP] Copy Pods Resources */,
 				AEBA1279208DC18A00B8D86C /* ShellScript */,
 			);
@@ -308,8 +317,6 @@
 				AE7266B62084A47800C34411 /* Sources */,
 				AE7266B72084A47800C34411 /* Frameworks */,
 				AE7266B82084A47800C34411 /* Resources */,
-				5A78DDA988979B0E3B8CACEF /* [CP] Embed Pods Frameworks */,
-				CA2019BDA97042E4AEF27F72 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -329,8 +336,6 @@
 				AE7266C12084A47800C34411 /* Sources */,
 				AE7266C22084A47800C34411 /* Frameworks */,
 				AE7266C32084A47800C34411 /* Resources */,
-				F292A9F0C228AA94FFD2CD35 /* [CP] Embed Pods Frameworks */,
-				000DCAE403F84E3FB79722ED /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -420,21 +425,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		000DCAE403F84E3FB79722ED /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VideoEditorUITests/Pods-VideoEditorUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		314DE41A6FEEA67EA9F0B2BB /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -471,36 +461,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		5A78DDA988979B0E3B8CACEF /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VideoEditorTests/Pods-VideoEditorTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		764F050C429C29722B9FDAAD /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VideoEditor/Pods-VideoEditor-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		A4845C89B53B5A461F4B9FB2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -533,21 +493,6 @@
 			shellScript = "
 ";
 		};
-		CA2019BDA97042E4AEF27F72 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VideoEditorTests/Pods-VideoEditorTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		E4934CA3E5304B2FFDDCF64E /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -555,30 +500,15 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-VideoEditor/Pods-VideoEditor-resources.sh",
-				$PODS_CONFIGURATION_BUILD_DIR/OLCVideoPlayer/OLCVideoPlayer.bundle,
+				"${PODS_CONFIGURATION_BUILD_DIR}/OLCVideoPlayer/OLCVideoPlayer.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/OLCVideoPlayer.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VideoEditor/Pods-VideoEditor-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F292A9F0C228AA94FFD2CD35 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VideoEditorUITests/Pods-VideoEditorUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -591,7 +521,9 @@
 				AE1DE374208DEE31004E8516 /* CropVideoVC.m in Sources */,
 				AECCA10B2084C1E800F933A7 /* AssetBrowserItem.m in Sources */,
 				AE7266AA2084A47700C34411 /* ViewController.m in Sources */,
+				AE8F579E209AF13A00E71B87 /* ListCropSizesCollectionViewCell.m in Sources */,
 				AE7266B52084A47800C34411 /* main.m in Sources */,
+				AEBF19FD20A1CE8700353419 /* SaveCropVideoVC.m in Sources */,
 				AE1987392085C40900838898 /* ListCollectionViewCell.m in Sources */,
 				AEFB33A12091BBED009D050C /* PlayerManagerClass.m in Sources */,
 				AE11F02120876AF600C86007 /* TrimVideoVC.m in Sources */,

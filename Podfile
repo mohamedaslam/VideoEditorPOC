@@ -9,8 +9,8 @@ target 'VideoEditor' do
   pod 'Masonry'
   pod 'ICGVideoTrimmer'
   pod 'OLCVideoPlayer'
-
-  target 'VideoEditorTests' do
+  pod 'LLVideoEditor'
+target 'VideoEditorTests' do
     inherit! :search_paths
     # Pods for testing
   end

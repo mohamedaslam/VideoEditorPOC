@@ -16,7 +16,7 @@
 #import "ICGVideoTrimmerView.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "OLCVideoPlayer.h"
-
+#import "LLVideoEditor.h"
 @interface TrimVideoVC ()<ICGVideoTrimmerDelegate,OLCVideoPlayerDelegate>
 {
     UIView *videoPlayerBGView;
@@ -127,7 +127,6 @@
     }];
     [self.vidplayer setDelegate:self];
     
-    
     /////////
     UIView *progressbarBGView=[[UIView alloc]init];
     progressbarBGView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -217,6 +216,9 @@
         make.height.equalTo(@(20));
     }];
     
+    
+    
+    
     self.asset = [AVAsset assetWithURL:getSelectedVideoURL];
     AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:self.asset];
     self.player = [AVPlayer playerWithPlayerItem:item];
@@ -243,6 +245,18 @@
 
     }
 }
+- (NSURL *)applicationDocumentsDirectory {
+    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory
+                                                   inDomains:NSUserDomainMask] lastObject];
+}
+- (CALayer *)createVideoLayer {
+    // a simple red rectangle
+    CALayer *layer = [CALayer layer];
+    layer.backgroundColor = [UIColor redColor].CGColor;
+    layer.frame = CGRectMake(10, 10, 100, 50);
+    return layer;
+}
+
 - (void) viewDidAppear:(BOOL)animated
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationClosing:) name:
@@ -258,6 +272,9 @@
         NSMutableArray *videos = [[NSMutableArray alloc] init];
 
         video = [[NSMutableDictionary alloc] init];
+        
+      
+
         [video setObject:getSelectedVideoURL forKey:OLCPlayerVideoURL];
         [video setValue:@0 forKey:OLCPlayerPlayTime];
         [videos addObject:video];

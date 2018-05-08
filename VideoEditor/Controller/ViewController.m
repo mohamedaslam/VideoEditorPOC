@@ -141,14 +141,14 @@
      [self buildAssetsLibrary];
 }
 -(void)playPauseControllerMethods{
-
-    [self.vidplayer mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).with.offset(70);
-        make.left.equalTo(self.view).with.offset(0);
-        make.height.equalTo(@(180));
-        make.width.equalTo(@(self.view.frame.size.width));
-    }];
-    [self.vidplayer setDelegate:self];
+//
+//    [self.vidplayer mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.view).with.offset(70);
+//        make.left.equalTo(self.view).with.offset(0);
+//        make.height.equalTo(@(180));
+//        make.width.equalTo(@(self.view.frame.size.width));
+//    }];
+//    [self.vidplayer setDelegate:self];
     
     /////////
     self.progressbarBGView=[[UIView alloc]init];
@@ -352,6 +352,7 @@
      UIApplicationWillEnterForegroundNotification object:nil];
     NSMutableArray *videos = [[NSMutableArray alloc] init];
     NSMutableDictionary *video = nil;
+   
     video = [[NSMutableDictionary alloc] init];
     [video setObject:getSelectedURl forKey:OLCPlayerVideoURL];
     [video setValue:@0 forKey:OLCPlayerPlayTime];
@@ -360,7 +361,7 @@
     [self.vidplayer playVideos:playlist];
     [self.vidplayer continusPlay:NO];
     [self.vidplayer shuffleVideos:NO];
-//    self.vidplayer.transform = CGAffineTransformRotate(self.vidplayer.transform, M_PI_2);
+   // self.vidplayer.transform = CGAffineTransformRotate(self.vidplayer.transform, M_PI_2);
 
     [_collectionView reloadData];
 }
