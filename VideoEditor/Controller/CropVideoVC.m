@@ -30,7 +30,10 @@
 
         NSArray *ratiocropsize;
         NSArray *cropSizeImages;
+        
+    
     }
+
     @property (strong, nonatomic) NSString *tempVideoPath;
     @property(strong,nonatomic) UIView *croplayerview;
     @property (assign, nonatomic) BOOL isPlaying;
@@ -44,6 +47,8 @@
     @property (strong, nonatomic) ICGVideoTrimmerView *trimmerView;
     @property (weak, nonatomic) IBOutlet UIButton *trimButton;
 //    @property (strong, nonatomic) NSString *tempVideoPath;
+    @property(strong,nonatomic)NSString *getWidthSize;
+    @property(strong,nonatomic)NSString *getHeightSize;
 
     @property (strong, nonatomic) AVAssetExportSession *exportSession;
     @property (strong, nonatomic) AVAsset *asset;
@@ -112,7 +117,21 @@
             make.width.equalTo(@(30));
             make.height.equalTo(@(30));
         }];
-       
+    ///////////DoneButton
+    donebtn = [UIButton new];
+    donebtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [donebtn addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [donebtn setBackgroundColor:[UIColor clearColor]];
+    donebtn.translatesAutoresizingMaskIntoConstraints = NO;
+    [donebtn setImage:[UIImage imageNamed:@"doneimg.png"] forState:UIControlStateNormal];
+    [donebtn setExclusiveTouch:YES];
+    [titleBarBGView addSubview:donebtn];
+    [donebtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(titleBarBGView).with.offset(4);
+        make.right.equalTo(titleBarBGView).with.offset(-10);
+        make.height.equalTo(@(40));
+        make.width.equalTo(@(40));
+    }];
    
     self.vidplayer = [[OLCVideoPlayer alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 240)];
  //   self.vidplayer.frame = CGRectMake(0, 0, self.view.frame.size.width, 240);
@@ -238,7 +257,17 @@
         make.right.equalTo(self.view.mas_right).with.offset(-0);
         make.height.equalTo(@(120));
     }];
-
+    NSMutableArray *videos = [[NSMutableArray alloc] init];
+    NSMutableDictionary *video = nil;
+    video = [[NSMutableDictionary alloc] init];
+    [video setObject:_getSelectedURl forKey:OLCPlayerVideoURL];
+    [video setValue:@0 forKey:OLCPlayerPlayTime];
+    [videos addObject:video];
+    playlist = videos;
+    [self.vidplayer playVideos:playlist];
+    [self.vidplayer pause];
+//    [self.vidplayer continusPlay:YES];
+    [self.vidplayer shuffleVideos:NO];
     // Do any additional setup after loading the view.
 }
 #pragma mark - CollectionView Methods
@@ -247,14 +276,19 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     return [ratiocropsize count];
 }
+-(void) buttonClicked:(UIButton*)sender
+{
+    [self cropVideoMethod:_getSelectedURl getWidth:self.getWidthSize getHeigth:self.getHeightSize];
 
+}
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     ListCropSizesCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ListCropSizesCollectionViewCell" forIndexPath:indexPath];
-    cell.backgroundColor=[UIColor greenColor];
+    cell.backgroundColor=[UIColor blackColor];
     if(ratiocropsize.count>0){
         cell.ratioSizeLabel.text = [ratiocropsize objectAtIndex:indexPath.row];
+        cell._imageView.image = [UIImage imageNamed:@"CropImg.png"];
+
     }
-//    [collectionView reloadData];
     return cell;
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -267,8 +301,9 @@
         frameRect.origin.y = 0;
         frameRect.size.height = self.vidplayer.frame.size.height;
         self.vidplayer.frame = frameRect;
-        [self cropVideoMehod:_getSelectedURl getWidth:506 getHeigth:300];
-      
+        self.getWidthSize = @"0.0";
+        self.getHeightSize = @"0.0";
+
     }
     if(indexPath.row == 1){
         NSLog(@"1:1");
@@ -278,7 +313,8 @@
         frameRect.origin.y = 0;
         frameRect.size.height = self.vidplayer.frame.size.height;
         self.croplayerview.frame = frameRect;
-        [self cropVideoMehod:_getSelectedURl getWidth:506 getHeigth:300];
+        self.getWidthSize = @"40.0";
+        self.getHeightSize = @"40.0";
 
     }
     if(indexPath.row == 2){
@@ -289,6 +325,9 @@
         frameRect.origin.y = 0;
         frameRect.size.height = self.vidplayer.frame.size.height;
         self.croplayerview.frame = frameRect;
+        self.getWidthSize = @"0.0";
+        self.getHeightSize = @"0.0";
+
     }
     if(indexPath.row == 3){
         NSLog(@"4:3");
@@ -298,6 +337,9 @@
         frameRect.origin.y = 0;
         frameRect.size.height = self.vidplayer.frame.size.height;
         self.croplayerview.frame = frameRect;
+        self.getWidthSize = @"100.0";
+        self.getHeightSize = @"0.0";
+
     }
     if(indexPath.row == 4){
         NSLog(@"9:16");
@@ -307,6 +349,9 @@
         frameRect.origin.y = 0;
         frameRect.size.height = self.vidplayer.frame.size.height;
         self.croplayerview.frame = frameRect;
+        self.getWidthSize = @"140.0";
+        self.getHeightSize = @"0.0";
+
     }
     if(indexPath.row == 5){
         NSLog(@"16:9");
@@ -316,6 +361,9 @@
         frameRect.origin.y = 0;
         frameRect.size.height = self.vidplayer.frame.size.height;
         self.croplayerview.frame = frameRect;
+        self.getWidthSize = @"200.0";
+        self.getHeightSize = @"0.0";
+
         
     }
 }
@@ -440,78 +488,148 @@
 //        [self presentViewController:VC animated:YES completion:nil];
     }
 }
--(void)cropVideoMehod:(NSURL *)geturl getWidth:(CGFloat *)widthValue getHeigth:(CGFloat *)heightValue
+-(void)cropVideoMethod:(NSURL *)geturl getWidth:(NSString *)widthValue getHeigth:(NSString *)heightValue
 {
-    // output file
-    NSString* outputPath;
-    if ([[NSFileManager defaultManager] fileExistsAtPath:outputPath])
-            [[NSFileManager defaultManager] removeItemAtPath:outputPath error:nil];
-        NSString* getoutputPath = _getSelectedURl;
+    CGFloat widthSize = (CGFloat)[widthValue floatValue];
+    CGFloat heightSize = (CGFloat)[heightValue floatValue];
+    //load our movie Asset
+    AVAsset *asset = [AVAsset assetWithURL:_getSelectedURl];
     
-        // input file
-        AVAsset* asset = [AVAsset assetWithURL:_getSelectedURl];
+    //create an avassetrack with our asset
+    AVAssetTrack *clipVideoTrack = [[asset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
     
-        AVMutableComposition *composition = [AVMutableComposition composition];
-        [composition  addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
+    //create a video composition and preset some settings
+    AVMutableVideoComposition* videoComposition = [AVMutableVideoComposition videoComposition];
+    videoComposition.frameDuration = CMTimeMake(1, 30);
+    //here we are setting its render size to its height x height (Square)
+    videoComposition.renderSize = CGSizeMake(clipVideoTrack.naturalSize.height, clipVideoTrack.naturalSize.height-64);
     
-        // input clip
-        AVAssetTrack *clipVideoTrack = [[asset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
-        CGAffineTransform transform = clipVideoTrack.preferredTransform;
+    //create a video instruction
+    AVMutableVideoCompositionInstruction *instruction = [AVMutableVideoCompositionInstruction videoCompositionInstruction];
+    instruction.timeRange = CMTimeRangeMake(kCMTimeZero, CMTimeMakeWithSeconds(60, 30));
     
-        //get actual display size of video
-        CGSize videoSize;
-        if ((transform.a == 0 && transform.b == 1 && transform.c == -1 && transform.d == 0) // rotate 90
-            || (transform.a == 0 && transform.b == -1 && transform.c == 1 && transform.d == 0)) { // rotate -90
-            videoSize = CGSizeMake(clipVideoTrack.naturalSize.height,clipVideoTrack.naturalSize.width);
-        } else {
-            videoSize = clipVideoTrack.naturalSize;
-        }
-        CGFloat squareDimension = fminf(videoSize.width,videoSize.height);
+    AVMutableVideoCompositionLayerInstruction* transformer = [AVMutableVideoCompositionLayerInstruction videoCompositionLayerInstructionWithAssetTrack:clipVideoTrack];
     
-        // make render size square
-        AVMutableVideoComposition* videoComposition = [AVMutableVideoComposition videoComposition];
-        videoComposition.renderSize = CGSizeMake(squareDimension,squareDimension);
-        videoComposition.frameDuration = CMTimeMake(1, 30);
+    //Here we shift the viewing square up to the TOP of the video so we only see the top
+    CGAffineTransform t1 = CGAffineTransformMakeTranslation(clipVideoTrack.naturalSize.height, 0 );
+    t1.ty=0.0;
+    //Use this code if you want the viewing square to be in the middle of the video
+    //CGAffineTransform t1 = CGAffineTransformMakeTranslation(clipVideoTrack.naturalSize.height, -(clipVideoTrack.naturalSize.width - clipVideoTrack.naturalSize.height) /2 );
     
-        AVMutableVideoCompositionInstruction *instruction = [AVMutableVideoCompositionInstruction videoCompositionInstruction];
-        instruction.timeRange = CMTimeRangeMake(kCMTimeZero, kCMTimePositiveInfinity);
+    //Make sure the square is portrait
+    CGAffineTransform t2 = CGAffineTransformRotate(t1, M_PI_2);
     
-        // shift video to be in the center
-        AVMutableVideoCompositionLayerInstruction* transformer = [AVMutableVideoCompositionLayerInstruction videoCompositionLayerInstructionWithAssetTrack:clipVideoTrack];
-        CGAffineTransform translation = CGAffineTransformMakeTranslation(- (videoSize.width - squareDimension)/2, -(videoSize.height - squareDimension) /2 );
-        CGAffineTransform finalTransform = CGAffineTransformConcat(transform, translation);
+    CGAffineTransform finalTransform = t2;
+    [transformer setTransform:finalTransform atTime:kCMTimeZero];
     
-        [transformer setTransform:finalTransform atTime:kCMTimeZero];
-        instruction.layerInstructions = [NSArray arrayWithObject:transformer];
-        videoComposition.instructions = [NSArray arrayWithObject: instruction];
+    //add the transformer layer instructions, then add to video composition
+    instruction.layerInstructions = [NSArray arrayWithObject:transformer];
+    videoComposition.instructions = [NSArray arrayWithObject: instruction];
     
-        // export
-        self.exporter = [[AVAssetExportSession alloc] initWithAsset:asset presetName:AVAssetExportPresetHighestQuality] ;
-        self.exporter.videoComposition = videoComposition;
-        NSURL *furl = [NSURL fileURLWithPath:self.tempVideoPath];
-    //    self.exportSession.outputURL = furl;
-        self.exporter.outputURL = _getSelectedURl;
-        self.exporter.outputFileType=AVFileTypeQuickTimeMovie;
+    //Create an Export Path to store the cropped video
+    NSString * documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *exportPath = [documentsPath stringByAppendingFormat:@"/CroppedVideo.mp4"];
+    NSURL *exportUrl = [NSURL fileURLWithPath:exportPath];
     
-        [self.exporter exportAsynchronouslyWithCompletionHandler:^(void){
-            switch(self.exporter.status) {
-                case AVAssetExportSessionStatusCompleted:
-                    NSLog(@"file exported successfully");
-                    break;
-                default:
-                    NSLog(@"file did not export successfully");
-            }
-        }];
-        NSMutableArray *videos = [[NSMutableArray alloc] init];
-        NSMutableDictionary *video = nil;
-        video = [[NSMutableDictionary alloc] init];
-        [video setObject:outputPath forKey:OLCPlayerVideoURL];
-        [video setValue:@0 forKey:OLCPlayerPlayTime];
-        [videos addObject:video];
-        playlist = videos;
-        [self.vidplayer playVideos:playlist];
-        [self.vidplayer continusPlay:YES];
-        [self.vidplayer shuffleVideos:NO];
+    //Remove any prevouis videos at that path
+    [[NSFileManager defaultManager]  removeItemAtURL:exportUrl error:nil];
+    
+    //Export
+    self.exportSession = [[AVAssetExportSession alloc] initWithAsset:asset presetName:AVAssetExportPresetHighestQuality] ;
+    self.exportSession.videoComposition = videoComposition;
+    self.exportSession.outputURL = exportUrl;
+    self.exportSession.outputFileType = AVFileTypeQuickTimeMovie;
+    
+    [self.exportSession exportAsynchronouslyWithCompletionHandler:^
+     {
+         dispatch_async(dispatch_get_main_queue(), ^{
+             //Call when finished
+             NSMutableArray *videos = [[NSMutableArray alloc] init];
+                     NSMutableDictionary *video = nil;
+                     video = [[NSMutableDictionary alloc] init];
+                     [video setObject:exportUrl forKey:OLCPlayerVideoURL];
+                     [video setValue:@0 forKey:OLCPlayerPlayTime];
+                     [videos addObject:video];
+                     playlist = videos;
+                     [self.vidplayer playVideos:playlist];
+                     [self.vidplayer continusPlay:YES];
+                     [self.vidplayer shuffleVideos:NO];
+          //   uploadedVideoPath=[exportUrl absoluteString];
+         });
+     }];
+    
+    
+    
+//    // output file
+//    NSString* outputPath;
+//    if ([[NSFileManager defaultManager] fileExistsAtPath:outputPath])
+//            [[NSFileManager defaultManager] removeItemAtPath:outputPath error:nil];
+//        NSString* getoutputPath = _getSelectedURl;
+//
+//        // input file
+//        AVAsset* asset = [AVAsset assetWithURL:_getSelectedURl];
+//
+//        AVMutableComposition *composition = [AVMutableComposition composition];
+//        [composition  addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
+//
+//        // input clip
+//        AVAssetTrack *clipVideoTrack = [[asset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+//        CGAffineTransform transform = clipVideoTrack.preferredTransform;
+//
+//        //get actual display size of video
+//        CGSize videoSize;
+//        if ((transform.a == 0 && transform.b == 1 && transform.c == -1 && transform.d == 0) // rotate 90
+//            || (transform.a == 0 && transform.b == -1 && transform.c == 1 && transform.d == 0)) { // rotate -90
+//            videoSize = CGSizeMake(clipVideoTrack.naturalSize.height,clipVideoTrack.naturalSize.width);
+//        } else {
+//            videoSize = clipVideoTrack.naturalSize;
+//        }
+//        CGFloat squareDimension = fminf(videoSize.width - widthSize,videoSize.height- heightSize);
+//
+//        // make render size square
+//        AVMutableVideoComposition* videoComposition = [AVMutableVideoComposition videoComposition];
+//        videoComposition.renderSize = CGSizeMake(squareDimension,squareDimension);
+//        videoComposition.frameDuration = CMTimeMake(1, 30);
+//
+//        AVMutableVideoCompositionInstruction *instruction = [AVMutableVideoCompositionInstruction videoCompositionInstruction];
+//        instruction.timeRange = CMTimeRangeMake(kCMTimeZero, kCMTimePositiveInfinity);
+//
+//        // shift video to be in the center
+//        AVMutableVideoCompositionLayerInstruction* transformer = [AVMutableVideoCompositionLayerInstruction videoCompositionLayerInstructionWithAssetTrack:clipVideoTrack];
+//        CGAffineTransform translation = CGAffineTransformMakeTranslation(- (videoSize.width - squareDimension)/2, -(videoSize.height - squareDimension) /2 );
+//        CGAffineTransform finalTransform = CGAffineTransformConcat(transform, translation);
+//
+//        [transformer setTransform:finalTransform atTime:kCMTimeZero];
+//        instruction.layerInstructions = [NSArray arrayWithObject:transformer];
+//        videoComposition.instructions = [NSArray arrayWithObject: instruction];
+//
+//        // export
+//        self.exporter = [[AVAssetExportSession alloc] initWithAsset:asset presetName:AVAssetExportPresetHighestQuality] ;
+//        self.exporter.videoComposition = videoComposition;
+//        NSURL *furl = [NSURL fileURLWithPath:self.tempVideoPath];
+//        self.exportSession.outputURL = furl;
+//        self.exporter.outputURL = _getSelectedURl;
+//        self.exporter.outputFileType=AVFileTypeQuickTimeMovie;
+//
+//        [self.exporter exportAsynchronouslyWithCompletionHandler:^(void){
+//            switch(self.exporter.status) {
+//                case AVAssetExportSessionStatusCompleted:
+//                    NSLog(@"file exported successfully");
+//                    break;
+//                default:
+//                    NSLog(@"file did not export successfully");
+//            }
+//        }];
+//        NSMutableArray *videos = [[NSMutableArray alloc] init];
+//        NSMutableDictionary *video = nil;
+//        video = [[NSMutableDictionary alloc] init];
+//        [video setObject:outputPath forKey:OLCPlayerVideoURL];
+//        [video setValue:@0 forKey:OLCPlayerPlayTime];
+//        [videos addObject:video];
+//        playlist = videos;
+//        [self.vidplayer playVideos:playlist];
+//        [self.vidplayer continusPlay:YES];
+//        [self.vidplayer shuffleVideos:NO];
 }
 - (NSURL *)applicationDocumentsDirectory {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory

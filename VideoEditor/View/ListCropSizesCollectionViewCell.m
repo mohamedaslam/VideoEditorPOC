@@ -14,19 +14,18 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(6, 6, self.contentView.frame.size.width-12, 50)];
-        [_imageView setBackgroundColor:[UIColor whiteColor]];
+        _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(16, 10, self.contentView.frame.size.width-32, 44)];
+        [_imageView setBackgroundColor:[UIColor clearColor]];
         [self.contentView addSubview:_imageView];
-        UILabel *fromLabel = [[UILabel alloc]initWithFrame:CGRectMake(6, 58, self.contentView.frame.size.width-12, 20)];
-        //fromLabel.text = @"text";
+        ratioSizeLabel = [[UILabel alloc]initWithFrame:CGRectMake(6, 58, self.contentView.frame.size.width-12, 20)];
        // fromLabel.numberOfLines = 1;
-        fromLabel.baselineAdjustment = UIBaselineAdjustmentAlignBaselines; // or UIBaselineAdjustmentAlignCenters, or UIBaselineAdjustmentNone
-        fromLabel.adjustsFontSizeToFitWidth = YES;
-        fromLabel.clipsToBounds = YES;
-        fromLabel.backgroundColor = [UIColor brownColor];
-        fromLabel.textColor = [UIColor blackColor];
-        fromLabel.textAlignment = NSTextAlignmentCenter;
-        [self.contentView addSubview:fromLabel];
+       // fromLabel.baselineAdjustment = UIBaselineAdjustmentAlignBaselines; // or UIBaselineAdjustmentAlignCenters, or UIBaselineAdjustmentNone
+        ratioSizeLabel.adjustsFontSizeToFitWidth = YES;
+        ratioSizeLabel.clipsToBounds = YES;
+        ratioSizeLabel.backgroundColor = [UIColor clearColor];
+        ratioSizeLabel.textColor = [UIColor whiteColor];
+        ratioSizeLabel.textAlignment = NSTextAlignmentCenter;
+        [self.contentView addSubview:ratioSizeLabel];
     }
     return self;
 }

@@ -17,5 +17,5 @@
 @property(nonatomic,strong)NSURL *getSelectedURl;
 @property(nonatomic,strong)NSURL *getfullSelectedURl;
 @property (nonatomic) AVAssetExportSession *exporter;
--(void)cropVideoMehod:(NSURL *)geturl getWidth:(CGFloat *)widthValue getHeigth:(CGFloat *)heightValue;
+-(void)cropVideoMethod:(NSURL *)geturl getWidth:(NSString *)widthValue getHeigth:(NSString *)heightValue;
 @end

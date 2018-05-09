@@ -33,6 +33,7 @@
 		AECCA10B2084C1E800F933A7 /* AssetBrowserItem.m in Sources */ = {isa = PBXBuildFile; fileRef = AECCA1092084C1E800F933A7 /* AssetBrowserItem.m */; };
 		AECCA1122084D02A00F933A7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AECCA1112084D02A00F933A7 /* QuartzCore.framework */; };
 		AEDD286C2088680100F0EC67 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEDD286B2088680100F0EC67 /* MobileCoreServices.framework */; };
+		AEF7BAF020A321370059323B /* CropImg.png in Resources */ = {isa = PBXBuildFile; fileRef = AEF7BAEF20A321370059323B /* CropImg.png */; };
 		AEFB33A12091BBED009D050C /* PlayerManagerClass.m in Sources */ = {isa = PBXBuildFile; fileRef = AEFB33A02091BBED009D050C /* PlayerManagerClass.m */; };
 		B08B0F4D9AD4AAA8D9C60927 /* libPods-VideoEditorTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DE270A2B0687D25BDD1B451 /* libPods-VideoEditorTests.a */; };
 		C3300E68FED08079B5A11520 /* libPods-VideoEditorUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE785908F3BEE946667C9179 /* libPods-VideoEditorUITests.a */; };
@@ -102,6 +103,7 @@
 		AECCA10A2084C1E800F933A7 /* AssetBrowserItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetBrowserItem.h; sourceTree = "<group>"; };
 		AECCA1112084D02A00F933A7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		AEDD286B2088680100F0EC67 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		AEF7BAEF20A321370059323B /* CropImg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CropImg.png; sourceTree = "<group>"; };
 		AEFB339F2091BBED009D050C /* PlayerManagerClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerManagerClass.h; sourceTree = "<group>"; };
 		AEFB33A02091BBED009D050C /* PlayerManagerClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayerManagerClass.m; sourceTree = "<group>"; };
 		E454F1B9FE055B2748E3F683 /* libPods-VideoEditor.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VideoEditor.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -198,6 +200,7 @@
 			children = (
 				AE7266A82084A47700C34411 /* ViewController.h */,
 				AE7266A92084A47700C34411 /* ViewController.m */,
+				AEF7BAEF20A321370059323B /* CropImg.png */,
 				AE11F01F20876AF600C86007 /* TrimVideoVC.h */,
 				AE11F02020876AF600C86007 /* TrimVideoVC.m */,
 				AE1DE372208DEE31004E8516 /* CropVideoVC.h */,
@@ -403,6 +406,7 @@
 				AEAC1DF4208F15C90034F291 /* playicon.png in Resources */,
 				AE7266AD2084A47700C34411 /* Main.storyboard in Resources */,
 				AE11F02320876EE600C86007 /* backBtn.png in Resources */,
+				AEF7BAF020A321370059323B /* CropImg.png in Resources */,
 				AE19873F2086253300838898 /* doneimg.png in Resources */,
 				AEAC1DF6208F15CF0034F291 /* pauseicon.png in Resources */,
 			);
