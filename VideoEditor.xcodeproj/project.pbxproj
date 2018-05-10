@@ -14,6 +14,11 @@
 		AE19873F2086253300838898 /* doneimg.png in Resources */ = {isa = PBXBuildFile; fileRef = AE19873E2086253200838898 /* doneimg.png */; };
 		AE1987412086253800838898 /* arrowimg.png in Resources */ = {isa = PBXBuildFile; fileRef = AE1987402086253800838898 /* arrowimg.png */; };
 		AE1DE374208DEE31004E8516 /* CropVideoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1DE373208DEE31004E8516 /* CropVideoVC.m */; };
+		AE65575120A496220012FD94 /* mailIMG.png in Resources */ = {isa = PBXBuildFile; fileRef = AE65574E20A496210012FD94 /* mailIMG.png */; };
+		AE65575220A496220012FD94 /* messageIMG.png in Resources */ = {isa = PBXBuildFile; fileRef = AE65574F20A496210012FD94 /* messageIMG.png */; };
+		AE65575320A496220012FD94 /* MoreIMg.png in Resources */ = {isa = PBXBuildFile; fileRef = AE65575020A496220012FD94 /* MoreIMg.png */; };
+		AE65575520A498650012FD94 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE65575420A498650012FD94 /* MessageUI.framework */; };
+		AE65575720A4A0580012FD94 /* homebtnIMG.png in Resources */ = {isa = PBXBuildFile; fileRef = AE65575620A4A0580012FD94 /* homebtnIMG.png */; };
 		AE7266A72084A47700C34411 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AE7266A62084A47700C34411 /* AppDelegate.m */; };
 		AE7266AA2084A47700C34411 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AE7266A92084A47700C34411 /* ViewController.m */; };
 		AE7266AD2084A47700C34411 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AE7266AB2084A47700C34411 /* Main.storyboard */; };
@@ -72,6 +77,11 @@
 		AE1987402086253800838898 /* arrowimg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowimg.png; sourceTree = "<group>"; };
 		AE1DE372208DEE31004E8516 /* CropVideoVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CropVideoVC.h; sourceTree = "<group>"; };
 		AE1DE373208DEE31004E8516 /* CropVideoVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CropVideoVC.m; sourceTree = "<group>"; };
+		AE65574E20A496210012FD94 /* mailIMG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mailIMG.png; sourceTree = "<group>"; };
+		AE65574F20A496210012FD94 /* messageIMG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = messageIMG.png; sourceTree = "<group>"; };
+		AE65575020A496220012FD94 /* MoreIMg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MoreIMg.png; sourceTree = "<group>"; };
+		AE65575420A498650012FD94 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		AE65575620A4A0580012FD94 /* homebtnIMG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = homebtnIMG.png; sourceTree = "<group>"; };
 		AE7266A22084A47600C34411 /* VideoEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VideoEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE7266A52084A47700C34411 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		AE7266A62084A47700C34411 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -115,6 +125,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE65575520A498650012FD94 /* MessageUI.framework in Frameworks */,
 				AEDD286C2088680100F0EC67 /* MobileCoreServices.framework in Frameworks */,
 				AECCA1122084D02A00F933A7 /* QuartzCore.framework in Frameworks */,
 				AECCA1062084C09E00F933A7 /* MediaPlayer.framework in Frameworks */,
@@ -147,6 +158,7 @@
 		581A5A4FD63461B9802C24FC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AE65575420A498650012FD94 /* MessageUI.framework */,
 				AEDD286B2088680100F0EC67 /* MobileCoreServices.framework */,
 				AECCA1112084D02A00F933A7 /* QuartzCore.framework */,
 				AECCA1052084C09E00F933A7 /* MediaPlayer.framework */,
@@ -201,6 +213,10 @@
 				AE7266A82084A47700C34411 /* ViewController.h */,
 				AE7266A92084A47700C34411 /* ViewController.m */,
 				AEF7BAEF20A321370059323B /* CropImg.png */,
+				AE65574E20A496210012FD94 /* mailIMG.png */,
+				AE65574F20A496210012FD94 /* messageIMG.png */,
+				AE65575620A4A0580012FD94 /* homebtnIMG.png */,
+				AE65575020A496220012FD94 /* MoreIMg.png */,
 				AE11F01F20876AF600C86007 /* TrimVideoVC.h */,
 				AE11F02020876AF600C86007 /* TrimVideoVC.m */,
 				AE1DE372208DEE31004E8516 /* CropVideoVC.h */,
@@ -402,8 +418,12 @@
 			files = (
 				AE1987412086253800838898 /* arrowimg.png in Resources */,
 				AE7266B22084A47800C34411 /* LaunchScreen.storyboard in Resources */,
+				AE65575720A4A0580012FD94 /* homebtnIMG.png in Resources */,
+				AE65575120A496220012FD94 /* mailIMG.png in Resources */,
+				AE65575220A496220012FD94 /* messageIMG.png in Resources */,
 				AE7266AF2084A47700C34411 /* Assets.xcassets in Resources */,
 				AEAC1DF4208F15C90034F291 /* playicon.png in Resources */,
+				AE65575320A496220012FD94 /* MoreIMg.png in Resources */,
 				AE7266AD2084A47700C34411 /* Main.storyboard in Resources */,
 				AE11F02320876EE600C86007 /* backBtn.png in Resources */,
 				AEF7BAF020A321370059323B /* CropImg.png in Resources */,

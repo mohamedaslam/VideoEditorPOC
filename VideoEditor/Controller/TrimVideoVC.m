@@ -215,10 +215,7 @@
         make.width.equalTo(@(54));
         make.height.equalTo(@(20));
     }];
-    
-    
-    
-    
+
     self.asset = [AVAsset assetWithURL:getSelectedVideoURL];
     AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:self.asset];
     self.player = [AVPlayer playerWithPlayerItem:item];

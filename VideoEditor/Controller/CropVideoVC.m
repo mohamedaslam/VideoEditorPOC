@@ -15,6 +15,8 @@
 #import "ICGVideoTrimmerView.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "LLVideoEditor.h"
+#import "SaveCropVideoVC.h"
+
 #import "ListCropSizesCollectionViewCell.h"
 @interface CropVideoVC ()<OLCVideoPlayerDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
     {
@@ -301,6 +303,7 @@
         frameRect.origin.y = 0;
         frameRect.size.height = self.vidplayer.frame.size.height;
         self.vidplayer.frame = frameRect;
+        [self.vidplayer setBackgroundColor:[UIColor orangeColor]];
         self.getWidthSize = @"0.0";
         self.getHeightSize = @"0.0";
 
@@ -315,6 +318,8 @@
         self.croplayerview.frame = frameRect;
         self.getWidthSize = @"40.0";
         self.getHeightSize = @"40.0";
+        [self.vidplayer setBackgroundColor:[UIColor orangeColor]];
+
 
     }
     if(indexPath.row == 2){
@@ -327,6 +332,8 @@
         self.croplayerview.frame = frameRect;
         self.getWidthSize = @"0.0";
         self.getHeightSize = @"0.0";
+        [self.vidplayer setBackgroundColor:[UIColor orangeColor]];
+
 
     }
     if(indexPath.row == 3){
@@ -339,6 +346,8 @@
         self.croplayerview.frame = frameRect;
         self.getWidthSize = @"100.0";
         self.getHeightSize = @"0.0";
+        [self.vidplayer setBackgroundColor:[UIColor orangeColor]];
+
 
     }
     if(indexPath.row == 4){
@@ -351,6 +360,8 @@
         self.croplayerview.frame = frameRect;
         self.getWidthSize = @"140.0";
         self.getHeightSize = @"0.0";
+        [self.vidplayer setBackgroundColor:[UIColor orangeColor]];
+
 
     }
     if(indexPath.row == 5){
@@ -363,6 +374,8 @@
         self.croplayerview.frame = frameRect;
         self.getWidthSize = @"200.0";
         self.getHeightSize = @"0.0";
+        [self.vidplayer setBackgroundColor:[UIColor orangeColor]];
+
 
         
     }
@@ -502,7 +515,7 @@
     AVMutableVideoComposition* videoComposition = [AVMutableVideoComposition videoComposition];
     videoComposition.frameDuration = CMTimeMake(1, 30);
     //here we are setting its render size to its height x height (Square)
-    videoComposition.renderSize = CGSizeMake(clipVideoTrack.naturalSize.height, clipVideoTrack.naturalSize.height-64);
+    videoComposition.renderSize = CGSizeMake(clipVideoTrack.naturalSize.height - widthSize, clipVideoTrack.naturalSize.height-64);
     
     //create a video instruction
     AVMutableVideoCompositionInstruction *instruction = [AVMutableVideoCompositionInstruction videoCompositionInstruction];
@@ -544,6 +557,10 @@
      {
          dispatch_async(dispatch_get_main_queue(), ^{
              //Call when finished
+             
+             SaveCropVideoVC*VC = [self.storyboard instantiateViewControllerWithIdentifier:@"SaveCropVideoVC"];
+             VC.getSelectedURl = exportUrl ;
+             [self presentViewController:VC animated:YES completion:nil];
              NSMutableArray *videos = [[NSMutableArray alloc] init];
                      NSMutableDictionary *video = nil;
                      video = [[NSMutableDictionary alloc] init];

@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface SaveCropVideoVC : UIViewController
+@property(nonatomic,strong)NSURL *getSelectedURl;
 
 @end
