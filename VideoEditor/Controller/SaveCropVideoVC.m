@@ -14,6 +14,8 @@
 #import "Masonry.h"
 #import <MessageUI/MessageUI.h>
 #import <MessageUI/MFMailComposeViewController.h>
+#import "ViewController.h"
+#import "CropVideoVC.h"
 
 @interface SaveCropVideoVC ()<OLCVideoPlayerDelegate,MFMessageComposeViewControllerDelegate,MFMailComposeViewControllerDelegate>
 {
@@ -313,11 +315,19 @@
 }
 -(void)homeButtonClicked:(id)sender
 {
-    
+    ViewController *VC = [self.storyboard instantiateViewControllerWithIdentifier:@"ViewController"];
+    [self presentViewController:VC animated:YES completion:nil];
 }
 - (void)viewDidLayoutSubviews
 {
     self.playerLayer.frame = CGRectMake(0, 0, videoPlayerBGView.frame.size.width, videoPlayerBGView.frame.size.height);
+}
+-(void) backbtnClicked:(UIButton*)sender
+{
+    CropVideoVC *VC = [self.storyboard instantiateViewControllerWithIdentifier:@"CropVideoVC"];
+    VC.getSelectedURl = _getfullSelectedURl;
+    [self presentViewController:VC animated:YES completion:nil];
+    
 }
 - (void)morebtn:(id)sender
 {
@@ -335,8 +345,10 @@
         mailCont.mailComposeDelegate = self;        // Required to invoke mailComposeController when send
         
         [mailCont setSubject:@"Email subject"];
-        [mailCont setToRecipients:[NSArray arrayWithObject:@"myFriends@email.com"]];
-        [mailCont setMessageBody:@"Email message" isHTML:NO];
+        [mailCont setToRecipients:[NSArray arrayWithObject:@""]];
+        NSString *_getURl = _getSelectedURl.absoluteString;
+
+        [mailCont setMessageBody:_getURl isHTML:NO];
         
         [self presentViewController:mailCont animated:YES completion:nil];
     }
@@ -345,8 +357,10 @@
 {
     MFMessageComposeViewController *picker = [[MFMessageComposeViewController alloc] init];
     picker.messageComposeDelegate = self;
-    picker.recipients = [NSArray arrayWithObjects:@"1234", @"2345", nil];
-    //picker.body = yourTextField.text
+    picker.recipients = [NSArray arrayWithObjects:@"", nil];
+    NSString *_getURl = _getSelectedURl.absoluteString;
+
+    picker.body = _getURl;
     
     [self presentModalViewController:picker animated:YES];
 }
@@ -358,11 +372,112 @@
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
     [controller dismissViewControllerAnimated:YES completion:nil];
 }
+-(void) playpausebtn:(UIButton*)sender
+{
+    if([self.vidplayer isPlaying]){
+        [self.vidplayer pause];
+    }
+    else{
+        [self.vidplayer play];
+    }
+}
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.vidplayer shutdown];
+}
+- (void)tapOnVideoLayer:(UITapGestureRecognizer *)tap
+{
+    if (self.isPlaying) {
+        [self.player pause];
+        [self stopPlaybackTimeChecker];
+    }else {
+        if (_restartOnPlay){
+            [self seekVideoToPos: self.startTime];
+            _restartOnPlay = NO;
+        }
+        [self.player play];
+        [self startPlaybackTimeChecker];
+    }
+    self.isPlaying = !self.isPlaying;
+}
+
+- (void)startPlaybackTimeChecker
+{
+    [self stopPlaybackTimeChecker];
+    self.playbackTimeCheckerTimer = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(onPlaybackTimeCheckerTimer) userInfo:nil repeats:YES];
+}
+
+- (void)stopPlaybackTimeChecker
+{
+    if (self.playbackTimeCheckerTimer) {
+        [self.playbackTimeCheckerTimer invalidate];
+        self.playbackTimeCheckerTimer = nil;
+    }
+}
+
+#pragma mark - PlaybackTimeCheckerTimer
+
+- (void)seekVideoToPos:(CGFloat)pos
+{
+    self.videoPlaybackPosition = pos;
+    CMTime time = CMTimeMakeWithSeconds(self.videoPlaybackPosition, self.player.currentTime.timescale);
+    [self.player seekToTime:time toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
+}
+
+#pragma mark - OLCVideoPlayer Delegates
+
+- (void) onFinishPlaying:(NSUInteger)index
+{
+    
+}
+
+- (void) onPause:(NSUInteger)index
+{
+    [self.btnPlayPause setImage:[UIImage imageNamed:@"playicon.png"] forState:UIControlStateNormal];
+}
+
+- (void) onPlay:(NSUInteger)index
+{
+    [self.btnPlayPause setImage:[UIImage imageNamed:@"pauseicon.png"] forState:UIControlStateNormal];
+}
+
+//this get called every 0.5 seconds with video duration and current playtime so we can update our progress bars
+- (void) onPlayInfoUpdate:(double)current withDuration:(double)duration
+{
+    float progress = ( current / duration );
+    self.sldProgress.progress = progress;
+    self.CurrentTimeLabel.text = [self stringFromSeconds:current];
+    self.totalDurationLabel.text = [self stringFromSeconds:duration];
+}
+
+#pragma mark - notifications
+
+- (void) applicationClosing:(NSNotification *)notification
+{
+    [self.vidplayer playInBackground];
+}
+
+- (void) applicationOpening:(NSNotification *)notification
+{
+    [self.vidplayer playInForeground];
+}
+
+#pragma mark - private
+
+- (NSString *) stringFromSeconds:(double) value
+{
+    NSTimeInterval interval = value;
+    NSInteger ti = (NSInteger)interval;
+    NSInteger seconds = ti % 60;
+    NSInteger minutes = (ti / 60) % 60;
+    NSInteger hours = (ti / 3600);
+    return [NSString stringWithFormat:@"%02ld:%02ld:%02ld", (long)hours, (long)minutes, (long)seconds];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 /*
 #pragma mark - Navigation
 

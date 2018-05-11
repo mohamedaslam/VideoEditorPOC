@@ -386,15 +386,12 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:ALAssetsLibraryChangedNotification object:nil];
 }
--(void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:YES];
-  //  [player pause];
-  //  [layer removeFromSuperlayer];
-  //  layer = nil;
-   // [self.vidplayer setDelegate:nil];
-    [self.vidplayer pause];
-   // self.vidplayer = nil;
-   // [self.vidplayer removeFromSuperview];
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [self.vidplayer shutdown];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
 }
 - (void)assetsLibraryDidChange:(NSNotification*)changeNotification
 {

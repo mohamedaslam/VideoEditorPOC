@@ -10,5 +10,6 @@
 
 @interface SaveCropVideoVC : UIViewController
 @property(nonatomic,strong)NSURL *getSelectedURl;
+@property(nonatomic,strong)NSURL *getfullSelectedURl;
 
 @end

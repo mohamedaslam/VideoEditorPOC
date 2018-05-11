@@ -39,7 +39,6 @@
 		AECCA1122084D02A00F933A7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AECCA1112084D02A00F933A7 /* QuartzCore.framework */; };
 		AEDD286C2088680100F0EC67 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEDD286B2088680100F0EC67 /* MobileCoreServices.framework */; };
 		AEF7BAF020A321370059323B /* CropImg.png in Resources */ = {isa = PBXBuildFile; fileRef = AEF7BAEF20A321370059323B /* CropImg.png */; };
-		AEFB33A12091BBED009D050C /* PlayerManagerClass.m in Sources */ = {isa = PBXBuildFile; fileRef = AEFB33A02091BBED009D050C /* PlayerManagerClass.m */; };
 		B08B0F4D9AD4AAA8D9C60927 /* libPods-VideoEditorTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DE270A2B0687D25BDD1B451 /* libPods-VideoEditorTests.a */; };
 		C3300E68FED08079B5A11520 /* libPods-VideoEditorUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AE785908F3BEE946667C9179 /* libPods-VideoEditorUITests.a */; };
 /* End PBXBuildFile section */
@@ -114,8 +113,6 @@
 		AECCA1112084D02A00F933A7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		AEDD286B2088680100F0EC67 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		AEF7BAEF20A321370059323B /* CropImg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CropImg.png; sourceTree = "<group>"; };
-		AEFB339F2091BBED009D050C /* PlayerManagerClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerManagerClass.h; sourceTree = "<group>"; };
-		AEFB33A02091BBED009D050C /* PlayerManagerClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayerManagerClass.m; sourceTree = "<group>"; };
 		E454F1B9FE055B2748E3F683 /* libPods-VideoEditor.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VideoEditor.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA736785B429C90CA632B4B0 /* Pods-VideoEditor.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoEditor.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VideoEditor/Pods-VideoEditor.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -212,19 +209,12 @@
 			children = (
 				AE7266A82084A47700C34411 /* ViewController.h */,
 				AE7266A92084A47700C34411 /* ViewController.m */,
-				AEF7BAEF20A321370059323B /* CropImg.png */,
-				AE65574E20A496210012FD94 /* mailIMG.png */,
-				AE65574F20A496210012FD94 /* messageIMG.png */,
-				AE65575620A4A0580012FD94 /* homebtnIMG.png */,
-				AE65575020A496220012FD94 /* MoreIMg.png */,
 				AE11F01F20876AF600C86007 /* TrimVideoVC.h */,
 				AE11F02020876AF600C86007 /* TrimVideoVC.m */,
 				AE1DE372208DEE31004E8516 /* CropVideoVC.h */,
 				AE1DE373208DEE31004E8516 /* CropVideoVC.m */,
 				AEBF19FB20A1CE8700353419 /* SaveCropVideoVC.h */,
 				AEBF19FC20A1CE8700353419 /* SaveCropVideoVC.m */,
-				AEFB339F2091BBED009D050C /* PlayerManagerClass.h */,
-				AEFB33A02091BBED009D050C /* PlayerManagerClass.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -242,6 +232,11 @@
 		AE11F01E208767EB00C86007 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				AEF7BAEF20A321370059323B /* CropImg.png */,
+				AE65574E20A496210012FD94 /* mailIMG.png */,
+				AE65574F20A496210012FD94 /* messageIMG.png */,
+				AE65575620A4A0580012FD94 /* homebtnIMG.png */,
+				AE65575020A496220012FD94 /* MoreIMg.png */,
 				AEAC1DF3208F15C90034F291 /* playicon.png */,
 				AEAC1DF5208F15CF0034F291 /* pauseicon.png */,
 				AE11F02220876EE600C86007 /* backBtn.png */,
@@ -549,7 +544,6 @@
 				AE7266B52084A47800C34411 /* main.m in Sources */,
 				AEBF19FD20A1CE8700353419 /* SaveCropVideoVC.m in Sources */,
 				AE1987392085C40900838898 /* ListCollectionViewCell.m in Sources */,
-				AEFB33A12091BBED009D050C /* PlayerManagerClass.m in Sources */,
 				AE11F02120876AF600C86007 /* TrimVideoVC.m in Sources */,
 				AE7266A72084A47700C34411 /* AppDelegate.m in Sources */,
 			);

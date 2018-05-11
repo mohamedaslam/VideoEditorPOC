@@ -282,6 +282,7 @@ NSString *const OLCPlayerPlayTime = @"OLCPlayerPlayTime";
     playerCtrl.frame  = playframe;
     playerCtrl.player.allowsExternalPlayback = NO; //this allow airplay for some reason
     playerCtrl.player.usesExternalPlaybackWhileExternalScreenIsActive = YES;
+    
 //    [playerCtrl setAffineTransform:CGAffineTransformMakeRotation(M_PI/2)];
 
 //    [_playerLayer setAffineTransform:CGAffineTransformMakeRotation(degreeToRadian(degree))];
@@ -303,9 +304,7 @@ NSString *const OLCPlayerPlayTime = @"OLCPlayerPlayTime";
 - (void) playVideo:(NSUInteger) index
 {
     NSDictionary *video  = [videolist objectAtIndex:index];
-    
     playtime        = [[video valueForKey:OLCPlayerPlayTime] doubleValue];
-    
     NSURL    *fileURL    = [video valueForKey:OLCPlayerVideoURL];
     NSNumber *playlimit  = [video valueForKey:OLCPlayerPlayTime];
     
@@ -316,31 +315,40 @@ NSString *const OLCPlayerPlayTime = @"OLCPlayerPlayTime";
         NSLog(@"OLCPlayer Error File not found: %@", fileURL.path);
     }
     
-//    AVURLAsset *asset = [AVURLAsset URLAssetWithURL:fileURL options:nil];
-//    AVPlayerItem *playerItem = [AVPlayerItem playerItemWithAsset:asset];
-//    playerCtrl.player = [AVPlayer playerWithPlayerItem: playerItem];
-//    playerCtrl.player.volume = volumeLevel;
-    
-    //video looping for same video
-//    AVURLAsset *tAsset = [AVURLAsset assetWithURL:fileURL];
-//    CMTimeRange tEditRange = CMTimeRangeMake(CMTimeMake(0, 600), CMTimeMake(tAsset.duration.value, tAsset.duration.timescale));
-//    AVMutableComposition *tComposition = [[AVMutableComposition alloc] init];
-//    for (int i = 0; i < 6; i++) { // Insert some copies.
-//        [tComposition insertTimeRange:tEditRange ofAsset:tAsset atTime:tComposition.duration error:nil];
-//    }
-    
-    AVAsset *composition = [self makeAssetComposition:fileURL forLimit:[playlimit floatValue]];
-    AVPlayerItem *tAVPlayerItem = [[AVPlayerItem alloc] initWithAsset:composition];
-    AVPlayer *tAVPlayer = [[AVPlayer alloc] initWithPlayerItem:tAVPlayerItem];
-    playerCtrl.player = tAVPlayer;
-    
+    AVURLAsset *asset = [AVURLAsset URLAssetWithURL:fileURL options:nil];
+    AVPlayerItem *playerItem = [AVPlayerItem playerItemWithAsset:asset];
+    playerCtrl.player = [AVPlayer playerWithPlayerItem: playerItem];
     playerCtrl.player.volume = volumeLevel;
-
-
+    
+ //   video looping for same video
+    AVURLAsset *tAsset = [AVURLAsset assetWithURL:fileURL];
+    CMTimeRange tEditRange = CMTimeRangeMake(CMTimeMake(0, 600), CMTimeMake(tAsset.duration.value, tAsset.duration.timescale));
+    AVMutableComposition *tComposition = [[AVMutableComposition alloc] init];
+    for (int i = 0; i < 6; i++) { // Insert some copies.
+        [tComposition insertTimeRange:tEditRange ofAsset:tAsset atTime:tComposition.duration error:nil];
+    }
+       
+//    AVAsset *composition = [self makeAssetComposition:fileURL forLimit:[playlimit floatValue]];
+//    AVPlayerItem *tAVPlayerItem = [[AVPlayerItem alloc] initWithAsset:composition];
+//    AVPlayer *tAVPlayer = [[AVPlayer alloc] initWithPlayerItem:tAVPlayerItem];
+//    playerCtrl.player = tAVPlayer;
+//
+//    playerCtrl.player.volume = volumeLevel;
+//        NSArray *tracks = [composition tracksWithMediaType:AVMediaTypeVideo];
+//
+//        CGSize videoSize = CGSizeZero;
+//            AVAssetTrack *videoTrack = [tracks objectAtIndex:0];
+//            videoSize = videoTrack.naturalSize;
+//    NSLog(@"%f",videoSize.width);
+//    NSLog(@"%f",videoSize.height);
+//    NSLog(@"VIDEO SIZE");
+    
 //    NSArray *tracks = [composition tracksWithMediaType:AVMediaTypeVideo];
 //
 //    CGSize videoSize = CGSizeZero;
-//
+    //        AVAssetTrack *videoTrack = [tracks objectAtIndex:0];
+    //        videoSize = videoTrack.naturalSize;
+
 //
 //    if ([tracks count] != 0)
 //    {

@@ -10,5 +10,6 @@
 
 @interface TrimVideoVC : UIViewController
 @property(nonatomic,strong)NSURL *getSelectedVideoURL;
+@property(nonatomic,strong)NSURL *getfullSelectedURl;
 
 @end

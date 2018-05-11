@@ -467,14 +467,10 @@
         [self.trimmerView seekToTime:self.startTime];
     }
 }
+
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:YES];
-
-    [self.player pause];
-    
-  //  [self.playerLayer removeFromSuperlayer];
-  //  self.playerLayer = nil;
-    
+    [self.vidplayer shutdown];
 }
 - (void)seekVideoToPos:(CGFloat)pos
 {
