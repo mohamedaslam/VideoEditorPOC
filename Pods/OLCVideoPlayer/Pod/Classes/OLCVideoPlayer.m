@@ -288,7 +288,7 @@ NSString *const OLCPlayerPlayTime = @"OLCPlayerPlayTime";
 //    [_playerLayer setAffineTransform:CGAffineTransformMakeRotation(degreeToRadian(degree))];
 //
 //    playerCtrl.setAffineTransform = CGAffineTransformMakeRotation(M_PI/2);
-    playerCtrl.videoGravity = AVLayerVideoGravityResizeAspect;
+    playerCtrl.videoGravity = AVLayerVideoGravityResize;
     
     [self.layer addSublayer:playerCtrl];
     

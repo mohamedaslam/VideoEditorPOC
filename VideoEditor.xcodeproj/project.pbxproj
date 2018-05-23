@@ -14,6 +14,9 @@
 		AE19873F2086253300838898 /* doneimg.png in Resources */ = {isa = PBXBuildFile; fileRef = AE19873E2086253200838898 /* doneimg.png */; };
 		AE1987412086253800838898 /* arrowimg.png in Resources */ = {isa = PBXBuildFile; fileRef = AE1987402086253800838898 /* arrowimg.png */; };
 		AE1DE374208DEE31004E8516 /* CropVideoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = AE1DE373208DEE31004E8516 /* CropVideoVC.m */; };
+		AE2F46A420AED05200FE8780 /* NLImageCropperView.m in Sources */ = {isa = PBXBuildFile; fileRef = AE2F46A220AED05200FE8780 /* NLImageCropperView.m */; };
+		AE2F46A520AED05200FE8780 /* NLCropViewLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = AE2F46A320AED05200FE8780 /* NLCropViewLayer.m */; };
+		AE45546020A5F16E00DE81ED /* Messages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE45545F20A5F16E00DE81ED /* Messages.framework */; };
 		AE65575120A496220012FD94 /* mailIMG.png in Resources */ = {isa = PBXBuildFile; fileRef = AE65574E20A496210012FD94 /* mailIMG.png */; };
 		AE65575220A496220012FD94 /* messageIMG.png in Resources */ = {isa = PBXBuildFile; fileRef = AE65574F20A496210012FD94 /* messageIMG.png */; };
 		AE65575320A496220012FD94 /* MoreIMg.png in Resources */ = {isa = PBXBuildFile; fileRef = AE65575020A496220012FD94 /* MoreIMg.png */; };
@@ -76,6 +79,11 @@
 		AE1987402086253800838898 /* arrowimg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowimg.png; sourceTree = "<group>"; };
 		AE1DE372208DEE31004E8516 /* CropVideoVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CropVideoVC.h; sourceTree = "<group>"; };
 		AE1DE373208DEE31004E8516 /* CropVideoVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CropVideoVC.m; sourceTree = "<group>"; };
+		AE2F46A020AED05100FE8780 /* NLImageCropperView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NLImageCropperView.h; sourceTree = "<group>"; };
+		AE2F46A120AED05100FE8780 /* NLCropViewLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NLCropViewLayer.h; sourceTree = "<group>"; };
+		AE2F46A220AED05200FE8780 /* NLImageCropperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NLImageCropperView.m; sourceTree = "<group>"; };
+		AE2F46A320AED05200FE8780 /* NLCropViewLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NLCropViewLayer.m; sourceTree = "<group>"; };
+		AE45545F20A5F16E00DE81ED /* Messages.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Messages.framework; path = System/Library/Frameworks/Messages.framework; sourceTree = SDKROOT; };
 		AE65574E20A496210012FD94 /* mailIMG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mailIMG.png; sourceTree = "<group>"; };
 		AE65574F20A496210012FD94 /* messageIMG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = messageIMG.png; sourceTree = "<group>"; };
 		AE65575020A496220012FD94 /* MoreIMg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MoreIMg.png; sourceTree = "<group>"; };
@@ -122,6 +130,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE45546020A5F16E00DE81ED /* Messages.framework in Frameworks */,
 				AE65575520A498650012FD94 /* MessageUI.framework in Frameworks */,
 				AEDD286C2088680100F0EC67 /* MobileCoreServices.framework in Frameworks */,
 				AECCA1122084D02A00F933A7 /* QuartzCore.framework in Frameworks */,
@@ -155,6 +164,7 @@
 		581A5A4FD63461B9802C24FC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AE45545F20A5F16E00DE81ED /* Messages.framework */,
 				AE65575420A498650012FD94 /* MessageUI.framework */,
 				AEDD286B2088680100F0EC67 /* MobileCoreServices.framework */,
 				AECCA1112084D02A00F933A7 /* QuartzCore.framework */,
@@ -222,6 +232,7 @@
 		AE11F01D208767D900C86007 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AE2F46A620AF0B1D00FE8780 /* Library */,
 				AE11F01E208767EB00C86007 /* Images */,
 				AE7266B42084A47800C34411 /* main.m */,
 				AE7266AE2084A47700C34411 /* Assets.xcassets */,
@@ -244,6 +255,17 @@
 				AE1987402086253800838898 /* arrowimg.png */,
 			);
 			path = Images;
+			sourceTree = "<group>";
+		};
+		AE2F46A620AF0B1D00FE8780 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				AE2F46A120AED05100FE8780 /* NLCropViewLayer.h */,
+				AE2F46A320AED05200FE8780 /* NLCropViewLayer.m */,
+				AE2F46A020AED05100FE8780 /* NLImageCropperView.h */,
+				AE2F46A220AED05200FE8780 /* NLImageCropperView.m */,
+			);
+			path = Library;
 			sourceTree = "<group>";
 		};
 		AE7266992084A47500C34411 = {
@@ -539,7 +561,9 @@
 			files = (
 				AE1DE374208DEE31004E8516 /* CropVideoVC.m in Sources */,
 				AECCA10B2084C1E800F933A7 /* AssetBrowserItem.m in Sources */,
+				AE2F46A420AED05200FE8780 /* NLImageCropperView.m in Sources */,
 				AE7266AA2084A47700C34411 /* ViewController.m in Sources */,
+				AE2F46A520AED05200FE8780 /* NLCropViewLayer.m in Sources */,
 				AE8F579E209AF13A00E71B87 /* ListCropSizesCollectionViewCell.m in Sources */,
 				AE7266B52084A47800C34411 /* main.m in Sources */,
 				AEBF19FD20A1CE8700353419 /* SaveCropVideoVC.m in Sources */,

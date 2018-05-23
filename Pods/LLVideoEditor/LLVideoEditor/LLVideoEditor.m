@@ -111,7 +111,7 @@
 
 - (void)exportToUrl:(NSURL *)exportUrl completionBlock:(void (^)(AVAssetExportSession *session))completionBlock {
         [self exportToUrl:exportUrl
-               presetName:AVAssetExportPreset1280x720
+               presetName:AVAssetExportPreset640x480
     optimizeForNetworkUse:YES
            outputFileType:AVFileTypeQuickTimeMovie
           completionBlock:completionBlock];
@@ -148,9 +148,9 @@
         if(completionBlock) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:exportUrl options:nil];
-                _videoData = [[LLVideoData alloc] initWithAsset:asset];
-                _commands = [NSMutableArray array];
-                completionBlock(_exportSession);
+                self->_videoData = [[LLVideoData alloc] initWithAsset:asset];
+                self->_commands = [NSMutableArray array];
+                completionBlock(self->_exportSession);
             });
         }
     }];

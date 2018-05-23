@@ -12,6 +12,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import <AVFoundation/AVFoundation.h>
 #import "ICGVideoTrimmerView.h"
+#import "NLImageCropperView.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 @interface CropVideoVC : UIViewController
 @property(nonatomic,strong)NSURL *getSelectedURl;

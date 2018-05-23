@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VideoEditor/Controller/CropVideoVC.m"
-            timestampString = "547741742.332215"
+            filePath = "Pods/LLVideoEditor/LLVideoEditor/Commands/LLAddLayerCommand.m"
+            timestampString = "548747640.027814"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "274"
-            endingLineNumber = "274"
-            landmarkName = "-collectionView:cellForItemAtIndexPath:"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
+            landmarkName = "-execute"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,12 +26,44 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VideoEditor/Controller/CropVideoVC.m"
-            timestampString = "547741742.332654"
+            timestampString = "548770348.687077"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "373"
-            endingLineNumber = "373"
-            landmarkName = "-backbtnClicked:"
+            startingLineNumber = "498"
+            endingLineNumber = "498"
+            landmarkName = "-cropVideoMethod:getWidth:getHeigth:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VideoEditor/Controller/TrimVideoVC.m"
+            timestampString = "548770348.6878"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "371"
+            endingLineNumber = "371"
+            landmarkName = "-buttonClicked:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VideoEditor/Controller/TrimVideoVC.m"
+            timestampString = "548770348.687995"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "383"
+            endingLineNumber = "383"
+            landmarkName = "-buttonClicked:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

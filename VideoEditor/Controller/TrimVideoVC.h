@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SDAVAssetExportSession.h"
 
 @interface TrimVideoVC : UIViewController
 @property(nonatomic,strong)NSURL *getSelectedVideoURL;

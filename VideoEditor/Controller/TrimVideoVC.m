@@ -115,7 +115,7 @@
     }];
     
 
-    self.vidplayer = [[OLCVideoPlayer alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 240)];
+    self.vidplayer = [[OLCVideoPlayer alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 320)];
     [self.vidplayer setBackgroundColor:[UIColor darkGrayColor]];
     self.vidplayer.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.vidplayer];
@@ -123,7 +123,7 @@
         make.centerY.equalTo(self.view);
         make.left.equalTo(self.view).with.offset(0);
         make.right.equalTo(self.view).with.offset(0);
-        make.height.equalTo(@(240));
+        make.height.equalTo(@(320));
     }];
     [self.vidplayer setDelegate:self];
     
@@ -308,6 +308,61 @@
         [self.vidplayer play];
     }
 }
+- (void)compressVideoWithInputVideoUrl:(NSURL *) inputVideoUrl
+{
+    /* Create Output File Url */
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *finalVideoURLString = [documentsDirectory stringByAppendingPathComponent:@"compressedVideo.mp4"];
+    NSURL *outputVideoUrl = ([[NSURL URLWithString:finalVideoURLString] isFileURL] == 1)?([NSURL URLWithString:finalVideoURLString]):([NSURL fileURLWithPath:finalVideoURLString]); // Url Should be a file Url, so here we check and convert it into a file Url
+    
+    
+    SDAVAssetExportSession *compressionEncoder = [SDAVAssetExportSession.alloc initWithAsset:[AVAsset assetWithURL:inputVideoUrl]]; // provide inputVideo Url Here
+    compressionEncoder.outputFileType = AVFileTypeMPEG4;
+    compressionEncoder.outputURL = outputVideoUrl; //Provide output video Url here
+    compressionEncoder.videoSettings = @
+    {
+    AVVideoCodecKey: AVVideoCodecTypeH264,
+    AVVideoWidthKey: @800,   //Set your resolution width here
+    AVVideoHeightKey: @600,  //set your resolution height here
+    AVVideoCompressionPropertiesKey: @
+        {
+        AVVideoAverageBitRateKey: @45000, // Give your bitrate here for lower size give low values
+        AVVideoProfileLevelKey: AVVideoProfileLevelH264High40,
+        },
+    };
+    compressionEncoder.audioSettings = @
+    {
+    AVFormatIDKey: @(kAudioFormatMPEG4AAC),
+    AVNumberOfChannelsKey: @2,
+    AVSampleRateKey: @44100,
+    AVEncoderBitRateKey: @128000,
+    };
+    
+    [compressionEncoder exportAsynchronouslyWithCompletionHandler:^
+     {
+         if (compressionEncoder.status == AVAssetExportSessionStatusCompleted)
+         {
+             NSLog(@"Compression Export Completed Successfully");
+                                     CropVideoVC*VC = [self.storyboard instantiateViewControllerWithIdentifier:@"CropVideoVC"];
+                                     VC.getSelectedURl = outputVideoUrl ;
+                                     VC.getfullSelectedURl = getSelectedVideoURL;
+                                     [self presentViewController:VC animated:YES completion:nil];
+         }
+         else if (compressionEncoder.status == AVAssetExportSessionStatusCancelled)
+         {
+             NSLog(@"Compression Export Canceled");
+         }
+         else
+         {
+             NSLog(@"Compression Failed");
+             
+         }
+     }];
+    
+}
 -(void) buttonClicked:(UIButton*)sender
 {
     [self deleteTempFile];
@@ -315,7 +370,7 @@
     NSArray *compatiblePresets = [AVAssetExportSession exportPresetsCompatibleWithAsset:self.asset];
     if ([compatiblePresets containsObject:AVAssetExportPresetMediumQuality]) {
         self.exportSession = [[AVAssetExportSession alloc]
-                              initWithAsset:self.asset presetName:AVAssetExportPresetPassthrough];
+                              initWithAsset:self.asset presetName:AVAssetExportPreset640x480];
         // Implementation continues.
         NSURL *furl = [NSURL fileURLWithPath:self.tempVideoPath];
         self.exportSession.outputURL = furl;
@@ -333,11 +388,15 @@
                     NSLog(@"Export canceled");
                     break;
                 default:
-                    NSLog(@"NONE");
                     dispatch_async(dispatch_get_main_queue(), ^{
                        movieUrl = [NSURL fileURLWithPath:self.tempVideoPath];
-                        NSLog(@"asdfasdfasfd%@", [movieUrl relativePath]);
-                        UISaveVideoAtPathToSavedPhotosAlbum([movieUrl relativePath], self,@selector(video:didFinishSavingWithError:contextInfo:), nil);
+                        
+                      //  [self compressVideoWithInputVideoUrl:movieUrl];
+                        CropVideoVC*VC = [self.storyboard instantiateViewControllerWithIdentifier:@"CropVideoVC"];
+                        VC.getSelectedURl = movieUrl ;
+                        VC.getfullSelectedURl = getSelectedVideoURL;
+                        [self presentViewController:VC animated:YES completion:nil];
+//                        UISaveVideoAtPathToSavedPhotosAlbum([movieUrl relativePath], self,@selector(video:didFinishSavingWithError:contextInfo:), nil);
                     });
                     break;
             }

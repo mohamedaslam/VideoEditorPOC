@@ -16,6 +16,7 @@
 #import <MessageUI/MFMailComposeViewController.h>
 #import "ViewController.h"
 #import "CropVideoVC.h"
+#import <AVKit/AVKit.h>
 
 @interface SaveCropVideoVC ()<OLCVideoPlayerDelegate,MFMessageComposeViewControllerDelegate,MFMailComposeViewControllerDelegate>
 {
@@ -54,6 +55,7 @@
 @property (assign, nonatomic) CGFloat startTime;
 @property (assign, nonatomic) CGFloat stopTime;
 @property (assign, nonatomic) BOOL restartOnPlay;
+@property (strong, nonatomic) AVPlayerViewController *playerViewController;
 
 @end
 
@@ -125,7 +127,7 @@
         make.width.equalTo(@(40));
     }];
     
-    self.vidplayer = [[OLCVideoPlayer alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 340)];
+    self.vidplayer = [[OLCVideoPlayer alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 320)];
     //   self.vidplayer.frame = CGRectMake(0, 0, self.view.frame.size.width, 240);
     [self.vidplayer setBackgroundColor:[UIColor darkGrayColor]];
     self.vidplayer.translatesAutoresizingMaskIntoConstraints = NO;
@@ -134,7 +136,7 @@
         make.centerY.equalTo(self.view);
         make.left.equalTo(self.view).with.offset(0);
         make.right.equalTo(self.view).with.offset(0);
-        make.height.equalTo(@(340));
+        make.height.equalTo(@(320));
     }];
     [self.vidplayer setDelegate:self];
     /////////
@@ -223,6 +225,15 @@
         make.width.equalTo(@(54));
         make.height.equalTo(@(20));
     }];
+
+//    AVPlayerItem* playerItem = [AVPlayerItem playerItemWithURL:_getSelectedURl];
+//    AVPlayer* playVideo = [[AVPlayer alloc] initWithPlayerItem:playerItem];
+//    _playerViewController = [[AVPlayerViewController alloc] init];
+//    _playerViewController.player = playVideo;
+//    _playerViewController.player.volume = 0;
+//    _playerViewController.view.frame = self.view.bounds;
+//    [self.view addSubview:_playerViewController.view];
+//    [playVideo play];
     NSMutableArray *videos = [[NSMutableArray alloc] init];
     NSMutableDictionary *video = nil;
     video = [[NSMutableDictionary alloc] init];
@@ -233,7 +244,7 @@
     [self.vidplayer playVideos:playlist];
     [self.vidplayer continusPlay:YES];
     [self.vidplayer shuffleVideos:NO];
-    
+
     UIView *sharedBGView = [[UIView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height - 150, self.view.frame.size.width, 150)];
     sharedBGView.translatesAutoresizingMaskIntoConstraints = NO;
     [sharedBGView setBackgroundColor:[UIColor blackColor]];
@@ -339,19 +350,16 @@
 }
 - (void)mailbtn:(id)sender
 {
-    // From within your active view controller
-    if([MFMailComposeViewController canSendMail]) {
-        MFMailComposeViewController *mailCont = [[MFMailComposeViewController alloc] init];
-        mailCont.mailComposeDelegate = self;        // Required to invoke mailComposeController when send
-        
-        [mailCont setSubject:@"Email subject"];
-        [mailCont setToRecipients:[NSArray arrayWithObject:@""]];
+    MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
+    if ([MFMailComposeViewController canSendMail]) {
+        picker.mailComposeDelegate = self;
+        [picker setSubject:@"abc@gmail.com"];
         NSString *_getURl = _getSelectedURl.absoluteString;
-
-        [mailCont setMessageBody:_getURl isHTML:NO];
-        
-        [self presentViewController:mailCont animated:YES completion:nil];
+        [picker setMessageBody:_getURl isHTML:YES];
+        [self presentViewController:picker animated:YES completion:NULL];
     }
+    // From within your active view controller
+   
 }
 - (void)messagebtn:(id)sender
 {
@@ -359,15 +367,19 @@
     picker.messageComposeDelegate = self;
     picker.recipients = [NSArray arrayWithObjects:@"", nil];
     NSString *_getURl = _getSelectedURl.absoluteString;
-
     picker.body = _getURl;
-    
-    [self presentModalViewController:picker animated:YES];
+    [self presentViewController:picker animated:YES completion:nil];
 }
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller
                  didFinishWithResult:(MessageComposeResult)result {
-
-    [controller dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    if (result == MessageComposeResultCancelled)
+        NSLog(@"Message cancelled");
+    else if (result == MessageComposeResultSent)
+        NSLog(@"Message sent");
+    else
+        NSLog(@"Message failed");
+    
 }
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
     [controller dismissViewControllerAnimated:YES completion:nil];
